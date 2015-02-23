@@ -35,7 +35,7 @@
 	\newpage
 
 
-	\section{Abstract}
+	\section*{Abstract}
 	This is where I'll write my abstract
 
 	\tableofcontents
@@ -221,14 +221,16 @@
 		Fig x. Part of the graphical interface of the OMS system. Here a list jobs.
 
 			\subsubsection{Original scenario}
-			When opening a work order, all the service objects should be displayed 
+			{\em When opening a work order, all the service objects should be displayed.}
 
 			By opening one of those work orders, there is a list with check-boxes in the interface that displays all service objects. The ones that are eligible for service are checked.
 
 			Fig x. Work order, in the middle on the right is the list of service objects.
 
 			\subsubsection{Updated scenario}
-			The updated scenarios: When opening a work order, only the service objects eligible should be displayed and In the service object management window, all the service objects should be displayed
+			{\em When opening a work order, only the service objects eligible should be displayed.}
+
+			In the service object management window, all the service objects should be displayed
 			
 			This is a new implementation of how the service objects are being presented and the feedback received says that it is hard to visualize which items should receive service since the list is quite long and the box rather small. The development team came up with the idea of showing only the eligible and external items with warnings in the list. The complete list of service object can be accessed by a button which opens up a new interface.
 
@@ -239,9 +241,60 @@
 			When the mechanic closes the work order, the system makes the conclusion that the checked items in the list have received service and updates the database accordingly.
 
 
-			\subsubsection{Method one}
-			\subsubsection{Method two}
+			\subsubsection{Method one - GUI test}
 
+
+				\paragraph{Issues with test data}
+				
+				In order to be able to develop tests for this scenario, it is crucial to have access to a bus that is in need of service and to know which service objects will be in the list. 
+
+				However this information isn’t stable. For one, because of the nature of service objects whose status in some cases is updated every day. Also since the test database is updated every two days, a vehicle can be repaired and be taken off the list of work orders. This means that the test data would need to be updated every day with new information.
+
+				To solve this, the first available vehicle in need of service is selected in the work order list instead of selecting a specific vehicle. 
+
+				Also, a conditional compilation statement is placed around the area of the code where the service object list is retrieved from the database. Since this information is retrieved as a collection, a method is implemented to be able to create a collection with test data easily. With the conditional compilation we are able to either compile a normal version of the system, or one where our test data is used instead. 
+
+				This is needed to get the GUI tests to work without a proper test database but we will see that it also good support for the tests written in method 2.
+
+				\paragraph{Implementation of base scenario}
+				
+				The GUI test follows these steps
+			
+				\begin{enumerate}
+					\item Open the OMS application
+					\item Find the correct menu option to open the workshop main form
+					\item Select the tab for ongoing work orders in the workshop main form
+					\item Double-click on one of the service orders in the list of work order to open it up
+					\item Verify that all the service objects in the service object list are displayed in the checked list 
+				\end{enumerate}
+
+				\paragraph{Implementation of the updated scenario}
+				The updated scenario follows these steps
+
+				\begin{enumerate}
+					\item 1 to 4 are similar to the original GUI test that is up until the point where the work order is opened.
+					\item Verify that only the eligible objects and the service objects are displayed in the checked list
+					\item Click the “Add” button
+					\item Verify that all service objects are displayed in the checked list
+				\end{enumerate}
+
+			\subsubsection{Method two}
+				The change that is being introduced in the code concerns which items from the service object list are displayed in the checked list.
+
+				[Code snippet]
+				
+				\paragraph{Implementation of the base scenario} 
+				The method works in four steps. First a collection of service objects is retrieved from the database.
+				Second, it goes through the collection and marks the items that are eligible for servicing. Third, it transforms this list into one that can be displayed in the checked list in the GUI and finally, it displays it.
+				By breaking out the second and third steps into separate methods, they can be tested individually.
+				The method that produces a collection of service object that was made for the GUI test is helpful as input to the tests.
+
+				\begin{tabular}{l l l}
+				Given & When & Then \\
+				A collection with all kinds of service objects & A list is created & All objects are in \\
+
+				\end{tabular}
+				
 
 		\subsection{Case 2: The Fuel Outtake and Odometer}
 			\subsubsection{Method one}

@@ -1,5 +1,31 @@
 \documentclass{article}
 
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=single,
+  language=VBScript,
+  aboveskip=3mm,
+  belowskip=3mm,
+  captionpos=b,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2
+}
+
+
 \title{Master Thesis}
 \author{Ulrika Malmgren}
 
@@ -52,6 +78,7 @@
 		A black box testing technique for end-to-end tests. 
 		\subsection{Advantages}
 		\subsection{Drawbacks}
+		Time consuming, false positives, flaky
 
 	\section{Unit testing}
 		\subsection{Introduction}
@@ -90,9 +117,23 @@
 
 	\section{Approach}
 		\subsection{Comparison criteria}
-		- education
-		- time
-		- ??
+			\subsubsection{Time}
+			One important aspect of this thesis is to compare the two methods with regards to how difficult it is to maintain the tests. An obvious way of doing this is to measure the time it takes to update the tests after the system has changed. 
+
+			Time measurement can be tricky to perform and during the short time span available for the thesis, it is not possible to get enough data in order to do a statistical analysis on it. 
+
+			However, it is still interesting to use the recorded times when discussing the results. The time that is recorded is the time spent working on the problem at hand. Time used for example for discussions and solving problems with the test or development environment will not be recorded as efficient time spent on the test or refactoring effort.
+			
+			Even though a lot of focus is placed on the maintenance effort for the tests, the time it takes to set up the tests will also be recorded. If one method is very costly it, this needs to be taken into account when comparing the two. As a matter of fact, if both methods are costly, it will still be interesting to know this.
+
+			\subsubsection{Changes}
+			There are other ways of measuring effort as well. In {\em A Case study on Regression Test Suite Maintenance in System Evolution} \cite{regression}, the authors log the steps of their work during its progress. 
+			Their work builds on top of a previous case study where a system has been added a feature using three different change strategies. Skoglund and Runeson look at the maintenance effort required to update the test suite of the system in each case. 
+
+			The log includes information such as compilation errors in the test
+			suite, number of lines of modified test code and number of lines of modified system code. Inspired by this approach, this thesis will also present some of the same metrics.
+
+			\subsubsection{What else?}
 
 		\subsection{Procedure}
 		In order to evaluate the benefit of one method over the other, on top pf adding automated tests to this system, it is also necessary to look at how difficult it is to maintain the tests when the system changes. 
@@ -136,24 +177,99 @@
 		However we don't know for sure how the system will evolve in the future.
 
 		\subsection{Frameworks}
+
+			Two different frameworks are used in this thesis. For GUI tests, the White framework and for unit tests, NUnit. 
+
 			\subsubsection{Project White}
-			(For GUI)
-			It is interesting that White uses the ids of the elements rather than coordinates or such, for ease of maintainance.
+			For this purpose, an open source Framework for .NET applications called White is used. The framework is based on Microsoft's UIAutomation library and window messages. The UIAutomation library was originally developed for Assistive Technology products. That is, products designed to provide better access for individuals with physical or cognitive difficulties, impairments, or disabilities. \cite{white}
+
+			Through this API it is possible to interact with user interface (UI) elements. 
+			White provides functions that can be used to search for, access and manipulate UI elements in an application by name, automation id or type. 
+
+			For example:
+
+			\begin{lstlisting}[caption=A method which finds a button with id {\em btnServiceObjects} and clicks on it.]
+		Private Sub Click_add_serviceobjects_in(
+									ByVal workorder_window As UIItemContainer)
+			Dim addButton = workorder_window.Get(OfButton)(SearchCriteria.
+												ByAutomationId("btnServiceObjects"))
+			addButton.Click()
+		End Sub
+			\end{lstlisting}
+			
+			The framework also provides the possibility to log the UI elements found in a certain window, enabling the developer or tester to get further information about their names, types and attributes.
+
+			Since the elements are accessed with code and not through a recording, the tests are less sensitive to changes in the GUI. For example, as a long as a button keeps the same automation id, it doesn't matter if it is moved to another place on the GUI. 
+
+			SOURCE FOR THIS BEING GOOD!!!
+
+
 			\subsubsection{NUnit}
 			(For unit)
 			Write about mocks/stubs?
 
 	\section{Case studies}
 		\subsection{Case 1: The Service Object List}
+		In the Workshop module of the OMS system, focus is on keeping the vehicles in good shape by performing repairs and making sure that they receive servicing in due time. For this, a list of all the objects on the vehicles that can require servicing is being maintained in the database. 
+
+		For each service object has a certain interval between services. This can for example be after a certain amount of kilometers driven or after an amount of time. 
+
+		Some objects are external objects and service is performed on them by an external contractor, the other objects are serviced in the Nobina workshops. When an object is up for service it is said that it has a warning.
+
+		When a mechanic opens the system, a list of all vehicles at this garage that require service is displayed.
+
+		Fig x. Part of the graphical interface of the OMS system. Here a list jobs.
+
+			\subsubsection{Original scenario}
+			When opening a work order, all the service objects should be displayed 
+
+			By opening one of those work orders, there is a list with check-boxes in the interface that displays all service objects. The ones that are eligible for service are checked.
+
+			Fig x. Work order, in the middle on the right is the list of service objects.
+
+			\subsubsection{Updated scenario}
+			The updated scenarios: When opening a work order, only the service objects eligible should be displayed and In the service object management window, all the service objects should be displayed
+			
+			This is a new implementation of how the service objects are being presented and the feedback received says that it is hard to visualize which items should receive service since the list is quite long and the box rather small. The development team came up with the idea of showing only the eligible and external items with warnings in the list. The complete list of service object can be accessed by a button which opens up a new interface.
+
+			Fig x. Service object list management window.
+
+			In this interface, it is possible to select other service items to be added to the list that is displayed in the work order.
+
+			When the mechanic closes the work order, the system makes the conclusion that the checked items in the list have received service and updates the database accordingly.
+
+
 			\subsubsection{Method one}
 			\subsubsection{Method two}
+
+
 		\subsection{Case 2: The Fuel Outtake and Odometer}
 			\subsubsection{Method one}
 			\subsubsection{Method two}
 
 	\section{Results}
 		\subsection{Time}
+		\subsection{Effort}
 		\subsection{Difficulties - lessons learned}
+			\subsubsection{Test environment}
+
+			Confirms the studies in Testing - Prerequisites?
+
+			For the OMS system, there is a test database that is a copy from the real database. Every other day, a fresh copy is made. All the developers share the same database. This presents a problem for this thesis. 
+
+			Since it is not possible to know if some data will be present in the future, it is not certain that the tests written today will still work tomorrow. In some cases, it is certain that they won't work. Why?
+
+			Because of the complex structure of the database it is not possible to create specific test data that can be used for testing.
+
+			If the test requires a bus that has been driven a certain amount of kilometers, it is not possible to simply create such a bus. Neither is it possible to change the amount of kilometers for an existing bus because it might violate existing rules in the database. 
+
+			Also, some operation can only be performed once. For each time a test is rerun, a new object to perform the same action on has to be found.
+
+			Because of these problems, some workarounds have been introduced for the purpose of completing the thesis. In another scenario, I would recommend to solve this issue in a more permanent manner. The workarounds are explained in the different cases.
+
+			This is a difficulty for the GUI tests but it does not impact the unit tests.
+		\subsection{Risks}
+		I know what happens and might optimize my code for that scenario.
 
 	\section{Further work}
 	- analysis of what kind of bugs to the methods catch
@@ -165,6 +281,8 @@
 
 \begin{thebibliography}{1}
 \bibitem{refactor} Martin Fowler {\em Refactoring - Improving the design of everyday code} 1999: Addison-Wesley Professional
+\bibitem{regression} Skoglund and Runeson {\em A Case Study on Regression Test Suite Maintenance in System Evolution} 2004 
+\bibitem{white} {\em Project White} https://github.com/TestStack/White
 \end{thebibliography}
 
 \end{document}

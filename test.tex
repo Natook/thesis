@@ -1,0 +1,171 @@
+\documentclass{article}
+
+\title{Master Thesis}
+\author{Ulrika Malmgren}
+
+\begin{document}
+	\pagenumbering{gobble}
+	\maketitle
+	\newpage
+
+
+	\section{Abstract}
+	This is where I'll write my abstract
+
+	\tableofcontents
+	\newpage
+
+	\pagenumbering{arabic}
+
+	\section{Introduction}
+	\subsection{Background}
+		\subsubsection{About Nobina}
+		Nobina is the Nordic leader in scheduled public road transport services, with a market share of 16\%.
+		The company is also one of the ten largest public transport companies in Europe. It's most wellknown brand is Swebus Express which 2 million passengers use each year for long distance
+		traveling. Nobina has around 280 million passengers per year within the company’s two business units: contract traffic and express bus traffic. The bus fleet includes 3,500 vehicles and the company has 7,500 employees.
+
+		\subsubsection{About the OMS system}
+		As support for the production of these transport services, Nobina has built a specialized system, the Operation Management System (OMS) which was first released in 2003. OMS is comprised of 15 modules within 3 different areas: staff planning, vehicle maintenance and traffic management. It is unique since there is no system on the market that combines these areas. The system has 900 active users and is used in four countries (Sweden, Finland, Norway and Denmark).
+
+		OMS is a Winform application written in Vb.Net (80 \%) and C\# (20 \%). There is a general plan for the architecture of the modules but since each developer is responsible for one or two modules different programming styles exist.
+
+		This thesis will look more closely at the Workshop and Fuel modules in OMS. In the Workshop module, there are functions related to maintaining the vehicles in good condition such as error reports, servicing, workshop planning, and so on. Fuel on the other hand, handles the fuel consumption of the vehicles, the amount of kilometers driven, the fuel levels at the different garages, etc.
+
+		\subsubsection{Releases and testing} 
+		The system is released four times per year and warmfixes are released about once a month per module or two times a week for the entire system. Before each release manual testing is performed. 
+
+		For testing a release, 20 people are bought in externally and test the system for two days. Critical bugs are fixed and the system retested during an additional day.
+		
+		For a warmfix, only the concerned functionality is tested but for a regular release the entire system is tested.
+
+	\subsection{Problem statement}
+		Testing in this way is really expensive and Nobina wishes to lower their testing costs and using automated testing instead. 
+
+	\section{Testing}
+		\subsection{Purpose}
+		\subsection{Different levels of testing}
+		\subsection{Prerequisites}
+		What makes for a good test? Reproducable -> problems with test environment are interesting - test data?
+
+	\section{GUI testing}
+		\subsection{Introduction}
+		A black box testing technique for end-to-end tests. 
+		\subsection{Advantages}
+		\subsection{Drawbacks}
+
+	\section{Unit testing}
+		\subsection{Introduction}
+		A white box testing technique for small units of functionality
+		\subsection{Advantages}
+		\subsection{Drawbacks}
+
+	\section{Legacy code and refactoring}
+		\subsection{Introduction}
+		The OMS system has been running for seven years already at the time of the thesis and is considered to have legacy code. Before unit testing can be used to test the system, it needs to be refactored. 
+
+		\subsection{Legacy code}
+		
+		\subsection{Refactoring}
+		Refactoring is the process of changing a software system in such a way that it does not alter the behavior of the code yet improves its internal structure and a refactoring is a change made to the internal structure of software to make it easier to understand and cheaper to modify without changing its observable behavior. \cite{refactor}
+
+			\subsubsection{Purpose}
+			The general goals of refactoring are improved software design, improved understanding and help finding bugs.
+
+			There are several scenarios for when refactoring is used. For example, even though a piece of code, class or function has been written with a good design, as the system evolves and new functionality is added the good design might become obsolete. In order to improve the general design, refactoring the original code is needed.
+
+			In another scenario, the code might be bad to begin with. Urgency or lack of time might have forced a developer to solve a problem quickly, without having the time to create a well-designed solution.
+
+			A third scenario is the one for this thesis, refactoring in order to be able to add automated tests for the system.
+
+			\subsubsection{Advantages}
+			Software design is improved by reducing complexity. Some techniques include removing
+			duplication, breaking up large functions into smaller ones, breaking dependencies, and so on.
+			Reducing complexity of the software makes it easier to understand, simpler to maintain and less prone to involve bugs.
+
+			Improving understanding is important since there are more users of the code than one might initially think of. Besides the computer which reads and processes the code, there are the developers who will be reading the code after its been written. As a developer when a new feature is to be added or a bug is to be fixed, a lot of time is spent reading and trying to understand old code.
+
+		(Why is it good to break dependencies, why is separation of concerns good? Do I need to add a part about design that increases testability, or do I keep it here?)
+		IIn Refactoring for changeability: a way to go? and Measuring Technology Effects on Software Change Cost, it is shown in a case study that refactoring can significantly decrease the number of customer reported defects and effort needed to make changes.
+
+
+	\section{Approach}
+		\subsection{Comparison criteria}
+		- education
+		- time
+		- ??
+
+		\subsection{Procedure}
+		In order to evaluate the benefit of one method over the other, on top pf adding automated tests to this system, it is also necessary to look at how difficult it is to maintain the tests when the system changes. 
+
+		As it is not in the scope of this thesis to implement changes in the system, changes that are planed or have been performed and that are suitable for this research will be found. By looking at the work items that the OMS team has been working on, it is possible to select a change that seems appropriate. 
+
+		Because the source code is under version control, it is possible to select a certain change set from the source code repository and set the system up as it was at a certain point in time.
+		The same procedure is done for both the GUI tests and the refactored tests.
+
+		The following procedure will be used:
+
+		\begin{enumerate}
+			\item  Tests are created for the scenario prior to the change being implemented. The purpose is to pretend that there were test cases for the system before the change specified in the work item is implemented.
+			\item The change is rolled onto the system.
+			\item The test cases are changed in response to the change. Tests might be added, modified or removed.
+		\end{enumerate}
+
+		\subsection{Case selection}
+		With the time constraints for the Master's Thesis, it is necessary to pick a representative set of changes to look at.
+		An analysis of the three previous releases and an interview with one of the developers gives an indication of what kind of work items that are typical for this system and this module in particular.
+
+		\subsubsection{Past releases}
+		
+		\begin{tabular}{ c | c c c | c}
+					 	& GUI & Logic & Both & Total\\
+			February 	& 1 	& 2 	& 2 	& 5\\
+			May 		& 7 	& 1 	& 3 	& 11\\
+			September 	& 1 	& 0 	& 1 	& 2\\
+			\hline
+			Total 		& 9 	& 3 	& 6 	& 18\\
+		\end{tabular}
+
+
+		Two thirds of the work items have impact on the GUI. More than half of these are mere modifications of the GUI, whereas the rest also concern the business logic. Work items that only affect the business logic are few.
+
+		Most work items are of moderate size and a few of the logic changes are a bit larger.
+		
+		\subsubsection{Future releases}
+		The interview reveals that more GUI changes are to be expected in the future as the GUI is being polished and the system owner stresses the need for increased usability. H
+
+		However we don't know for sure how the system will evolve in the future.
+
+		\subsection{Frameworks}
+			\subsubsection{Project White}
+			(For GUI)
+			It is interesting that White uses the ids of the elements rather than coordinates or such, for ease of maintainance.
+			\subsubsection{NUnit}
+			(For unit)
+			Write about mocks/stubs?
+
+	\section{Case studies}
+		\subsection{Case 1: The Service Object List}
+			\subsubsection{Method one}
+			\subsubsection{Method two}
+		\subsection{Case 2: The Fuel Outtake and Odometer}
+			\subsubsection{Method one}
+			\subsubsection{Method two}
+
+	\section{Results}
+		\subsection{Time}
+		\subsection{Difficulties - lessons learned}
+
+	\section{Further work}
+	- analysis of what kind of bugs to the methods catch
+	- further analysis of maintainability of longer periods of time 
+	- introduction of the Page Object Pattern for more stable gui tests
+
+	\section{Conclusion}
+		A separate test environment for gui testing
+
+\begin{thebibliography}{1}
+\bibitem{refactor} Martin Fowler {\em Refactoring - Improving the design of everyday code} 1999: Addison-Wesley Professional
+\end{thebibliography}
+
+\end{document}
+

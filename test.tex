@@ -37,6 +37,7 @@
 
 	\section*{Abstract}
 	This is where I'll write my abstract
+	\newpage 
 
 	\tableofcontents
 	\newpage
@@ -92,7 +93,12 @@
 		The OMS system has been running for seven years already at the time of the thesis and is considered to have legacy code. Before unit testing can be used to test the system, it needs to be refactored. 
 
 		\subsection{Legacy code}
-		
+		Legacy code refers to source code that isn't new and the common interpretation is code inherited from someone else. Often this constitutes a problem since the original developer's intentions can be hard to discern. For example by the use of magic numbers and unexplained variable names. It is not unusual that legacy code is left untouched simply because new developers are afraid to break it.
+
+		Maintaining and developing legacy systems comes with a lot of different challenges. A system that has been developed throughout several years can easily become a patchwork of different technologies and ideals as many different developers leave their marks on it. Some technologies are viewed as outdated by new developers and as technologies develop; bottlenecks are moved to other places.
+
+		Another definition for legacy code is code without tests \cite{legacy}. Legacy code does not necessarily have to do with the age of the code but rather code that is difficult to maintain. When the system works in incomprehensible ways, developers are afraid to introduce subtle bugs. However, if there are tests written for the system, it is possible to change the code with impunity. A test can provide an invariant that lets the developers know if they have changed the behavior of the system.
+
 		\subsection{Refactoring}
 		Refactoring is the process of changing a software system in such a way that it does not alter the behavior of the code yet improves its internal structure and a refactoring is a change made to the internal structure of software to make it easier to understand and cheaper to modify without changing its observable behavior. \cite{refactor}
 
@@ -117,27 +123,10 @@
 
 
 	\section{Approach}
-		\subsection{Comparison criteria}
-			\subsubsection{Time}
-			One important aspect of this thesis is to compare the two methods with regards to how difficult it is to maintain the tests. An obvious way of doing this is to measure the time it takes to update the tests after the system has changed. 
-
-			Time measurement can be tricky to perform and during the short time span available for the thesis, it is not possible to get enough data in order to do a statistical analysis on it. 
-
-			However, it is still interesting to use the recorded times when discussing the results. The time that is recorded is the time spent working on the problem at hand. Time used for example for discussions and solving problems with the test or development environment will not be recorded as efficient time spent on the test or refactoring effort.
-			
-			Even though a lot of focus is placed on the maintenance effort for the tests, the time it takes to set up the tests will also be recorded. If one method is very costly it, this needs to be taken into account when comparing the two. As a matter of fact, if both methods are costly, it will still be interesting to know this.
-
-			\subsubsection{Changes}
-			There are other ways of measuring effort as well. In {\em A Case study on Regression Test Suite Maintenance in System Evolution} \cite{regression}, the authors log the steps of their work during its progress. 
-			Their work builds on top of a previous case study where a system has been added a feature using three different change strategies. Skoglund and Runeson look at the maintenance effort required to update the test suite of the system in each case. 
-
-			The log includes information such as compilation errors in the test
-			suite, number of lines of modified test code and number of lines of modified system code. Inspired by this approach, this thesis will also present some of the same metrics.
-
-			\subsubsection{Test runtime}
+		This section explains the approach used in this thesis which includes the procedure, the selection of cases for analysis, the comparison criteria from which the thesis will make a conclusion and the frameworks used to write the tests.
 
 		\subsection{Procedure}
-		In order to evaluate the benefit of one method over the other, on top pf adding automated tests to this system, it is also necessary to look at how difficult it is to maintain the tests when the system changes. 
+		In order to evaluate the benefit of one method over the other, on top of adding automated tests to this system, it is also necessary to look at how difficult it is to maintain the tests when the system changes. 
 
 		As it is not in the scope of this thesis to implement changes in the system, changes that are planed or have been performed and that are suitable for this research will be found. By looking at the work items that the OMS team has been working on, it is possible to select a change that seems appropriate. 
 
@@ -151,6 +140,8 @@
 			\item The change is rolled onto the system.
 			\item The test cases are changed in response to the change. Tests might be added, modified or removed.
 		\end{enumerate}
+
+		The procedure is applied first with GUI tests and later with unit tests for each case selected.
 
 		\subsection{Case selection}
 		With the time constraints for the Master's Thesis, it is necessary to pick a representative set of changes to look at.
@@ -176,6 +167,26 @@
 		The interview reveals that more GUI changes are to be expected in the future as the GUI is being polished and the system owner stresses the need for increased usability. H
 
 		However we don't know for sure how the system will evolve in the future.
+
+		\subsection{Comparison criteria}
+			\subsubsection{Time}
+			One important aspect of this thesis is to compare the two methods with regards to how difficult it is to maintain the tests. An obvious way of doing this is to measure the time it takes to update the tests after the system has changed. 
+
+			Time measurement can be tricky to perform and during the short time span available for the thesis, it is not possible to get enough data in order to do a statistical analysis on it. 
+
+			However, it is still interesting to use the recorded times when discussing the results. The time that is recorded is the time spent working on the problem at hand. Time used for example for discussions and solving problems with the test or development environment will not be recorded as efficient time spent on the test or refactoring effort.
+			
+			Even though a lot of focus is placed on the maintenance effort for the tests, the time it takes to set up the tests will also be recorded. If one method is very costly it, this needs to be taken into account when comparing the two. As a matter of fact, if both methods are costly, it will still be interesting to know this.
+
+			\subsubsection{Changes}
+			There are other ways of measuring effort as well. In {\em A Case study on Regression Test Suite Maintenance in System Evolution} \cite{regression}, the authors log the steps of their work during its progress. 
+			Their work builds on top of a previous case study where a system has been added a feature using three different change strategies. Skoglund and Runeson look at the maintenance effort required to update the test suite of the system in each case. 
+
+			The log includes information such as compilation errors in the test
+			suite, number of lines of modified test code and number of lines of modified system code. Inspired by this approach, this thesis will also present some of the same metrics.
+
+			\subsubsection{Test runtime}
+
 
 		\subsection{Frameworks}
 
@@ -221,14 +232,14 @@
 
 		Fig x. Part of the graphical interface of the OMS system. Here a list jobs.
 
-			\subsubsection{Original scenario}
+			\paragraph{Original scenario}
 			{\em When opening a work order, all the service objects should be displayed.}
 
 			By opening one of those work orders, there is a list with check-boxes in the interface that displays all service objects. The ones that are eligible for service are checked.
 
 			Fig x. Work order, in the middle on the right is the list of service objects.
 
-			\subsubsection{Updated scenario}
+			\paragraph{Updated scenario}
 			{\em When opening a work order, only the service objects eligible should be displayed.}
 
 			In the service object management window, all the service objects should be displayed
@@ -279,12 +290,12 @@
 					\item Verify that all service objects are displayed in the checked list
 				\end{enumerate}
 
-			\subsubsection{Method two}
+			\subsubsection{Method two - Unit tests}
 				The change that is being introduced in the code concerns which items from the service object list are displayed in the checked list.
 
 				[Code snippet]
 				
-				\paragraph{Implementation of the base scenario} 
+				\paragraph{Test cases for the base scenario} 
 				The method works in four steps. First a collection of service objects is retrieved from the database.
 				Second, it goes through the collection and marks the items that are eligible for servicing. Third, it transforms this list into one that can be displayed in the checked list in the GUI and finally, it displays it.
 				By breaking out the second and third steps into separate methods, they can be tested individually.
@@ -328,7 +339,7 @@
 					\caption{Test case 3 - the service object list is empty if there are no service objects}
 				\end{table}
 
-				\paragraph{Implementation of the updated scenario}
+				\paragraph{Test cases for the updated scenario}
 				In the updated scenario, the entire list of service objects isn't displayed all the time. Rather, in one case only the checked objects and the external objects with warnings (in the work order) are to be displayed and in the other case the entire list is to be displayed (in the service list management window).
 
 				In code, this is being achieved by adding a new field: ShowAllObjects. Depending on whether ShowAllObjects is true or false, the list is generated with different criteria.
@@ -375,40 +386,139 @@
 
 				To be certain of the correctness of the refactoring, both the test suite of unit tests and the GUI tests can be run.
 
+				\paragraph{Implementation}
+				Here is an example test for the updated scenario:
+
+				\begin{lstlisting}
+<Test()> Public Sub Given_DataViewWithAllKindsOfserviceItems_When_ArrayListIsCreated_
+Then_OnlyItemsElligibleForServiceShouldBeInIt()
+	'Arrange
+	Dim myDataset As DataSet = CreateTestDataSetWithAllKindsOfServiceItems()
+	Dim myDataView As New DataView(myDataset.Tables(0))
+	Dim myArrayList As ArrayList
+	myArrayList = New ArrayList
+
+	'Action
+	myArrayList = CreateArrayListOfCheckedServiceObjects(myDataView)
+
+	'Assert
+	'ArrayList has x elements
+	Assert.AreEqual(2, myArrayList.Count)
+
+	'ArrayList contains right elements
+	Assert.AreEqual("[-Alkolås-] (309 - 180 Days) *", myArrayList.Item(0).ToString)
+	Assert.AreEqual("Bränslefilter (65797 - 60000 Km) *", myArrayList.Item(1).ToString)
+End Sub
+				\end{lstlisting}
+
 		\subsection{Case 2: The Fuel Outtake and Odometer}
+
+		This case involves the Kilometers and Fuel module where it is possible to add fuel outtakes and readings for odometers, pumps, cisterns and so on. Every time a driver makes a fuel outtake he needs to add it to the OMS system with the date, time, new mileage for the vehicle and volume of the outtake.
+
+		A special case which can occur is when the odometer reaches 999 999 and rolls over to 0. When the user tries to enter a value for mileage that is smaller than the previous mileage, an error is registered and fuel outtake is flagged in the system. A manager then needs to handle it and call support to make a manual change in the database.
+		Since this is extra work for the managers, a solution has been devised to handle one roll over of the odometer. When the system notices that the previous mileage is larger than 900 000 and that the new mileage entered by the user is smaller than 10000, a dialog box is displayed asking the keuser if the odometer has rolled over. When the user selects yes, the database is updated accordingly.
+
+		The basic test scenario is Adding a fuel outtake should be saved properly.
+		The new scenario is Adding a fuel outtake when the odometer is about to roll over should trigger a dialog box.
+
+		\paragraph{Prerequisites}
+		Because it is not possible to save a fuel outtake with invalid parameters, it is not possible to repeatedly save fuel outtakes for the same vehicle with the same parameters over and over again.
+		This means that each time the GUI test runs, we either need to change the inventory number for the vehicle or the time of the outtake.
+		Another issue concerns the case when we want to have a previous mileage that is larger than 900 000. In that case we would need to identify a vehicle with that mileage and use it in our test.
+		However, after the test is run, the database has been updated and the vehicle no longer fills that prerequisite. Since the number of vehicles with mileages around 990 000 are few, we have a limited amount of possibilities to test.
+		This is solved by adding conditional compilation to the source code. When compiling the source for tests, we change the previous mileage to satisfy our conditions.
+
+
+
+
 			\subsubsection{Method one}
+In the base scenario the GUI test follows these steps:
+1. Open the OMS application
+2. Find the correct menu option to open the Km \& Fuel main form
+3. Enter an inventory number
+4. Use today's date
+5. Enter a time
+6. Fill in new mileage
+7. Verify that the amount of driven kilometers displayed is correct
+8. Fill in a fuel volume
+9. Verify that the average fuel consumption displayed is correct
+10. Click save
+11. Verify that the fuel outtake is displayed in the datagrid.
+The added scenario follows these steps:
+1. Open the OMS application
+2. Find the correct menu option to open the Km \& Fuel main form
+3. Enter an inventory number
+4. Use today's date
+5. Enter a time
+6. Verify that the label displaying the previous mileage is what it should be
+7. Fill in new mileage
+8. Verify that a dialog box is opened
+9. Answer \"Yes\"
+10. Verify that the amount of driven kilometers is correct
+
+
 			\subsubsection{Method two}
+
+			In the source of the form there is a method
+			\begin{lstlisting}
+Private Sub CheckIfKmOverOneMillionAndIfSoAskUserToCorrect()
+	If IsNumeric(lblReportFuelPreviousKm.Text) AndAlso (CInt(lblReportFuelPreviousKm.Text) >
+900000 And CInt(lblReportFuelPreviousKm.Text) < 1000000) Then
+		If IsNumeric(txtKm.Text) AndAlso (CInt(txtKm.Text) > 0 And CInt(txtKm.Text) < 10000) Then
+			If _millionKM = 0 Then
+				If MessageBox.Show(My.Resources.KM2Messages.msgVehicleMeterOverMillion,
+					My.Resources.KM2Messages.msgVehicleMeterOverMillionTitle,
+					MessageBoxButtons.YesNo,MessageBoxIcon.Question)= DialogResult.Yes Then
+						Dim modifyKM As New KMModifyKM 
+						MillionKM += 1
+						modifyKM.UpdKM_VehicleMeter(_vehicleMeterId, VehicleID, VehicleMeterType, MillionKM, AvgConsumption)
+						CalculateDrivenKm()
+				End If
+			End If
+		End If
+	End If
+End Sub
+		\end{lstlisting}
+
+			It has dependencies towards the GUI since it uses the information in some labels
+			(lblReportFuelPreviousKm), the values of fields (txtKm.Text) and displays a dialog box.
+			At the same time it performs some business logic based on the values in the labels, the text fields and a global variable called millionKM.
+			This method is refactored so that the business logic is broken out into an Odometer class with the single responsibility of handling properties and methods proper to the odometer. Since we break the dependencies towards the GUI, it is possible to write unit tests to test the Odometer class separetely.
+
+			A second part of the test scenario is to verify that the calculated amount of driven kilometers is correct. By adding a helper class to the form class and extracting the logic that calculates an amount of driven kilometers given certain paramaters, it is also possible to test this functionality through unit tests.
 
 	\section{Results}
 		\subsection{Time}
 		Both the efficient time spent on developing the tests and the total time spent on development has been measured. The efficient time is only the time used for coding whereas the total time accounts for problems with the development environment, time spent discussing issues, and so on.
 		In the tables below we can see the efficient and total times for developing the test cases before the anticipated change is rolled on and after it has been introduced.
 
-		\begin{table}[h!]
-			\begin{tabular}{l | l l | l l |}
-			               & \multicolumn{2}{c}{Base scenario} & \multicolumn{2}{| c |}{Updated scenario}     \\
-			\hline
-			 			   & Efficient & Total & Efficient & Total \\
-			 GUI tests     & 17        & 39    & 4         & 13    \\
-			 Unit tests    & 4         & 13    & 1         & 3   \\
-			 \end{tabular}
-			 \caption{Measured time in hours for Case 1: Service Objects}
-		 \end{table}
+			\subsubsection{Data}
 
-		\begin{table}[h!]
-			\begin{tabular}{l | l l | l l |}
-			               & \multicolumn{2}{c}{Base scenario} & \multicolumn{2}{| c|}{Updated scenario}     \\
-			\hline
-			 			   & Efficient & Total & Efficient & Total \\
-			 GUI tests     & 6         & 20    & 2         & 11    \\
-			 Unit tests    & 6         & 21    & 2         & 12    \\
-			 \end{tabular}
-			 \caption{Measured time in hours for Case 2: Odometer}
-		 \end{table}
+			\begin{table}[h!]
+				\begin{tabular}{l | l l | l l |}
+				               & \multicolumn{2}{c}{Base scenario} & \multicolumn{2}{| c |}{Updated scenario}     \\
+				\hline
+				 			   & Efficient & Total & Efficient & Total \\
+				 GUI tests     & 17        & 39    & 4         & 13    \\
+				 Unit tests    & 4         & 13    & 1         & 3   \\
+				 \end{tabular}
+				 \caption{Measured time in hours for Case 1: Service Objects}
+			 \end{table}
 
-		In both cases, developing the GUI tests is more costly than doing the refactoring effort. In both cases, the before and after proportions are maintained when comparing the GUI tests to the unit tests. The original effort is four times as large as the effort for updating the tests in case 1 and three times as large in case 2. The maintenance effort is in both cases smaller than the original cost for setting up the tests.
+			\begin{table}[h!]
+				\begin{tabular}{l | l l | l l |}
+				               & \multicolumn{2}{c}{Base scenario} & \multicolumn{2}{| c|}{Updated scenario}     \\
+				\hline
+				 			   & Efficient & Total & Efficient & Total \\
+				 GUI tests     & 6         & 20    & 2         & 11    \\
+				 Unit tests    & 6         & 21    & 2         & 12    \\
+				 \end{tabular}
+				 \caption{Measured time in hours for Case 2: Odometer}
+			 \end{table}
 
-		In the second case both GUI tests and unit tests take as much time both to set up but also to update according to the change introduced. In the other however, the GUI tests take four times as much time to set up and update compared to the unit tests.
+			In both cases, developing the GUI tests is more costly than doing the refactoring effort. In both cases, the before and after proportions are maintained when comparing the GUI tests to the unit tests. The original effort is four times as large as the effort for updating the tests in case 1 and three times as large in case 2. The maintenance effort is in both cases smaller than the original cost for setting up the tests.
+
+			In the second case both GUI tests and unit tests take as much time both to set up but also to update according to the change introduced. In the other however, the GUI tests take four times as much time to set up and update compared to the unit tests.
 
 			\subsubsection{Analysis}
 
@@ -447,6 +557,9 @@
 
 		\subsection{Test runtime}
 
+			\subsubsection{Data}
+			Using the testrunner, data on the time it takes to run the tests has been gathered. 
+
 			\begin{table}[h!]
 				\begin{tabular}{l |l |l l}
 				        & Scenario & Number of tests & Time (ms)\\
@@ -465,14 +578,27 @@
 				\begin{tabular}{l |l |l l}
 				        & Scenario & Number of tests & Time (ms)\\
 				\hline
-				 GUI tests & Base     & 1           & 6000 \\
+				GUI tests & Base     & 1           & 6000 \\
 				           & Updated  & 1    		& 3000 \\
 				\hline
-				 Unit tests & Odometer & 10         & 18 \\
+				Unit tests & Odometer & 10         & 18 \\
 				 		& Helper      & 5           & 17 \\
-				 \end{tabular}
-				 \caption{Measured average runtime after 10 runs for case 2 - Odometer}
-			 \end{table}
+				\end{tabular}
+				\caption{Measured average runtime after 10 runs for case 2 - Odometer}
+			\end{table}
+
+			\subsubsection{Analysis}
+			There are interesting observations to make regarding the runtime measurements. 
+
+			\paragraph{Differences between the GUI tests}
+			Surprisingly, the second case utilizes more components (see table x in amount of change) yet runs faster. An explanation for this is that when White searches the GUI for a specific component it goes through all of the components in the target window. This means that in a window with many components search will be slower than in one with fewer components. This is the case here as the window containing the list of jobs in the service object list case is more complex than the fuel
+			outtake window in the other case.
+
+			\paragraph{Differences between unit tests}
+			A difference in runtime for the unit tests in the different cases is noticed with around 46 ms in the first case and around 18 ms in the second case. An explanation for this is the different type of inputs for the different tests. In the first case, we manipulate collections of data (lists of service objects) whereas the tests for the second case handles short strings (mileages).
+
+			\paragraph{Differences between the two test types}			
+			More importantly, it is possible to tell that the tests from method 2 are 150 to 1300 times faster than the tests from method 1. Also with the unit tests it is possible to run several tests in a single run very fast compared to the GUI tests. In order to test a lot of different inputs with GUI it would take some time but this can be achieved swiftly with the tests in method 2.
 
 
 		\subsection{Lessons learned}
@@ -499,7 +625,6 @@
 
 			Estimation of time it would take to cover the same amount of scenarios with gui tests?
 
-
 		\subsection{Risks}
 		I know what happens and might optimize my code for that scenario. For example, the test cases for case 1. 
 
@@ -512,6 +637,7 @@
 		A separate test environment for gui testing
 
 \begin{thebibliography}{1}
+\bibitem{legacy} Michael Feathers {\em Working Effectively with Legacy Code} 2004: Prentice Hall
 \bibitem{refactor} Martin Fowler {\em Refactoring - Improving the design of everyday code} 1999: Addison-Wesley Professional
 \bibitem{regression} Skoglund and Runeson {\em A Case Study on Regression Test Suite Maintenance in System Evolution} 2004 
 \bibitem{white} {\em Project White} https://github.com/TestStack/White

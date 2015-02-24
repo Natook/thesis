@@ -285,6 +285,7 @@
 
 				\begin{enumerate}
 					\item 1 to 4 are similar to the original GUI test that is up until the point where the work order is opened.
+					\setcounter{enumi}{4}
 					\item Verify that only the eligible objects and the service objects are displayed in the checked list
 					\item Click the “Add” button
 					\item Verify that all service objects are displayed in the checked list
@@ -411,71 +412,76 @@ Then_OnlyItemsElligibleForServiceShouldBeInIt()
 End Sub
 				\end{lstlisting}
 
-		\subsection{Case 2: The Fuel Outtake and Odometer}
+			\subsection{Case 2: The Fuel Outtake and Odometer}
 
-		This case involves the Kilometers and Fuel module where it is possible to add fuel outtakes and readings for odometers, pumps, cisterns and so on. Every time a driver makes a fuel outtake he needs to add it to the OMS system with the date, time, new mileage for the vehicle and volume of the outtake.
+			This case involves the Kilometers and Fuel module where it is possible to add fuel outtakes and readings for odometers, pumps, cisterns and so on. Every time a driver makes a fuel outtake he needs to add it to the OMS system with the date, time, new mileage for the vehicle and volume of the outtake.
 
-		A special case which can occur is when the odometer reaches 999 999 and rolls over to 0. When the user tries to enter a value for mileage that is smaller than the previous mileage, an error is registered and fuel outtake is flagged in the system. A manager then needs to handle it and call support to make a manual change in the database.
-		Since this is extra work for the managers, a solution has been devised to handle one roll over of the odometer. When the system notices that the previous mileage is larger than 900 000 and that the new mileage entered by the user is smaller than 10000, a dialog box is displayed asking the keuser if the odometer has rolled over. When the user selects yes, the database is updated accordingly.
+			A special case which can occur is when the odometer reaches 999 999 and rolls over to 0. When the user tries to enter a value for mileage that is smaller than the previous mileage, an error is registered and fuel outtake is flagged in the system. A manager then needs to handle it and call support to make a manual change in the database.
+			Since this is extra work for the managers, a solution has been devised to handle one roll over of the odometer. When the system notices that the previous mileage is larger than 900 000 and that the new mileage entered by the user is smaller than 10000, a dialog box is displayed asking the keuser if the odometer has rolled over. When the user selects yes, the database is updated accordingly.
 
-		The basic test scenario is Adding a fuel outtake should be saved properly.
-		The new scenario is Adding a fuel outtake when the odometer is about to roll over should trigger a dialog box.
+			The basic test scenario is Adding a fuel outtake should be saved properly.
+			The new scenario is Adding a fuel outtake when the odometer is about to roll over should trigger a dialog box.
 
-		\paragraph{Prerequisites}
-		Because it is not possible to save a fuel outtake with invalid parameters, it is not possible to repeatedly save fuel outtakes for the same vehicle with the same parameters over and over again.
-		This means that each time the GUI test runs, we either need to change the inventory number for the vehicle or the time of the outtake.
-		Another issue concerns the case when we want to have a previous mileage that is larger than 900 000. In that case we would need to identify a vehicle with that mileage and use it in our test.
-		However, after the test is run, the database has been updated and the vehicle no longer fills that prerequisite. Since the number of vehicles with mileages around 990 000 are few, we have a limited amount of possibilities to test.
-		This is solved by adding conditional compilation to the source code. When compiling the source for tests, we change the previous mileage to satisfy our conditions.
-
-
+			\paragraph{Prerequisites}
+			Because it is not possible to save a fuel outtake with invalid parameters, it is not possible to repeatedly save fuel outtakes for the same vehicle with the same parameters over and over again.
+			This means that each time the GUI test runs, we either need to change the inventory number for the vehicle or the time of the outtake.
+			Another issue concerns the case when we want to have a previous mileage that is larger than 900 000. In that case we would need to identify a vehicle with that mileage and use it in our test.
+			However, after the test is run, the database has been updated and the vehicle no longer fills that prerequisite. Since the number of vehicles with mileages around 990 000 are few, we have a limited amount of possibilities to test.
+			This is solved by adding conditional compilation to the source code. When compiling the source for tests, we change the previous mileage to satisfy our conditions.
 
 
-			\subsubsection{Method one}
-In the base scenario the GUI test follows these steps:
-1. Open the OMS application
-2. Find the correct menu option to open the Km \& Fuel main form
-3. Enter an inventory number
-4. Use today's date
-5. Enter a time
-6. Fill in new mileage
-7. Verify that the amount of driven kilometers displayed is correct
-8. Fill in a fuel volume
-9. Verify that the average fuel consumption displayed is correct
-10. Click save
-11. Verify that the fuel outtake is displayed in the datagrid.
-The added scenario follows these steps:
-1. Open the OMS application
-2. Find the correct menu option to open the Km \& Fuel main form
-3. Enter an inventory number
-4. Use today's date
-5. Enter a time
-6. Verify that the label displaying the previous mileage is what it should be
-7. Fill in new mileage
-8. Verify that a dialog box is opened
-9. Answer \"Yes\"
-10. Verify that the amount of driven kilometers is correct
 
+
+			\subsubsection{Method one - GUI test}
+
+			\paragraph{Base scenario}
+
+			\begin{enumerate}
+				\item Open the OMS application
+				\item Find the correct menu option to open the Km \& Fuel main form
+				\item Enter an inventory number
+				\item Use today's date
+				\item Enter a time
+				\item Fill in new mileage
+				\item Verify that the amount of driven kilometers displayed is correct
+				\item Fill in a fuel volume
+				\item Verify that the average fuel consumption displayed is correct
+				\item Click save
+				\item Verify that the fuel outtake is displayed in the datagrid
+			\end{enumerate}
+				
+			\paragraph{Updated scenario}
+
+			\begin{enumerate}
+				\item Steps 1-5 are the same as in the base scenario
+				\setcounter{enumi}{5}
+				\item Verify that the label displaying the previous mileage is what it should be
+				\item Fill in new mileage
+				\item Verify that a dialog box is opened
+				\item Answer Yes
+				\item Verify that the amount of driven kilometers is correct
+			\end{enumerate}
 
 			\subsubsection{Method two}
 
 			In the source of the form there is a method
 			\begin{lstlisting}
 Private Sub CheckIfKmOverOneMillionAndIfSoAskUserToCorrect()
-	If IsNumeric(lblReportFuelPreviousKm.Text) AndAlso (CInt(lblReportFuelPreviousKm.Text) >
-900000 And CInt(lblReportFuelPreviousKm.Text) < 1000000) Then
-		If IsNumeric(txtKm.Text) AndAlso (CInt(txtKm.Text) > 0 And CInt(txtKm.Text) < 10000) Then
-			If _millionKM = 0 Then
-				If MessageBox.Show(My.Resources.KM2Messages.msgVehicleMeterOverMillion,
-					My.Resources.KM2Messages.msgVehicleMeterOverMillionTitle,
-					MessageBoxButtons.YesNo,MessageBoxIcon.Question)= DialogResult.Yes Then
-						Dim modifyKM As New KMModifyKM 
-						MillionKM += 1
-						modifyKM.UpdKM_VehicleMeter(_vehicleMeterId, VehicleID, VehicleMeterType, MillionKM, AvgConsumption)
-						CalculateDrivenKm()
+	If IsNumeric(lblReportFuelPreviousKm.Text) 
+		AndAlso (CInt(lblReportFuelPreviousKm.Text) > 900000 	
+		And CInt(lblReportFuelPreviousKm.Text) < 1000000) Then
+			If IsNumeric(txtKm.Text) AndAlso (CInt(txtKm.Text) > 0 And CInt(txtKm.Text) < 10000) Then
+				If _millionKM = 0 Then
+					If MessageBox.Show(My.Resources.KM2Messages.msgVehicleMeterOverMillion,
+						My.Resources.KM2Messages.msgVehicleMeterOverMillionTitle,
+						MessageBoxButtons.YesNo,MessageBoxIcon.Question)= DialogResult.Yes Then
+							Dim modifyKM As New KMModifyKM 
+							MillionKM += 1
+							modifyKM.UpdKM_VehicleMeter(_vehicleMeterId, VehicleID, VehicleMeterType, MillionKM, AvgConsumption)
+							CalculateDrivenKm()
+					End If
 				End If
 			End If
-		End If
 	End If
 End Sub
 		\end{lstlisting}

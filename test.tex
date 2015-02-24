@@ -79,6 +79,7 @@
 		\subsection{Advantages}
 		\subsection{Drawbacks}
 		Time consuming, false positives, flaky
+		Changing GUI means changing tests - doh!
 
 	\section{Unit testing}
 		\subsection{Introduction}
@@ -133,7 +134,7 @@
 			The log includes information such as compilation errors in the test
 			suite, number of lines of modified test code and number of lines of modified system code. Inspired by this approach, this thesis will also present some of the same metrics.
 
-			\subsubsection{What else?}
+			\subsubsection{Test runtime}
 
 		\subsection{Procedure}
 		In order to evaluate the benefit of one method over the other, on top pf adding automated tests to this system, it is also necessary to look at how difficult it is to maintain the tests when the system changes. 
@@ -380,8 +381,101 @@
 
 	\section{Results}
 		\subsection{Time}
+		Both the efficient time spent on developing the tests and the total time spent on development has been measured. The efficient time is only the time used for coding whereas the total time accounts for problems with the development environment, time spent discussing issues, and so on.
+		In the tables below we can see the efficient and total times for developing the test cases before the anticipated change is rolled on and after it has been introduced.
+
+		\begin{table}[h!]
+			\begin{tabular}{l | l l | l l |}
+			               & \multicolumn{2}{c}{Base scenario} & \multicolumn{2}{| c |}{Updated scenario}     \\
+			\hline
+			 			   & Efficient & Total & Efficient & Total \\
+			 GUI tests     & 17        & 39    & 4         & 13    \\
+			 Unit tests    & 4         & 13    & 1         & 3   \\
+			 \end{tabular}
+			 \caption{Measured time in hours for Case 1: Service Objects}
+		 \end{table}
+
+		\begin{table}[h!]
+			\begin{tabular}{l | l l | l l |}
+			               & \multicolumn{2}{c}{Base scenario} & \multicolumn{2}{| c|}{Updated scenario}     \\
+			\hline
+			 			   & Efficient & Total & Efficient & Total \\
+			 GUI tests     & 6         & 20    & 2         & 11    \\
+			 Unit tests    & 6         & 21    & 2         & 12    \\
+			 \end{tabular}
+			 \caption{Measured time in hours for Case 2: Odometer}
+		 \end{table}
+
+		In both cases, developing the GUI tests is more costly than doing the refactoring effort. In both cases, the before and after proportions are maintained when comparing the GUI tests to the unit tests. The original effort is four times as large as the effort for updating the tests in case 1 and three times as large in case 2. The maintenance effort is in both cases smaller than the original cost for setting up the tests.
+
+		In the second case both GUI tests and unit tests take as much time both to set up but also to update according to the change introduced. In the other however, the GUI tests take four times as much time to set up and update compared to the unit tests.
+
+			\subsubsection{Analysis}
+
+			One explanation for the fact that the first scenario takes so much longer is that the GUI test for the Service object scenario was the first GUI test scenario implemented. It took time to learn how to access the different components used. 
+
+			Also, the procedure for accessing the form to test is more complex in the Service Object scenario. Instead of opening it immediately from the Menu, it is required to go through a few steps before it is opened. The components in those steps are also more complex to work with in White than the ones in the fuel outtake form.
+			
+			Another interesting observation is the fact that in the first case, creating a GUI test for a single test case takes almost as long as one complete work week when taking into the account the entire effort of setting up the test, that is the total time measured. In the second case, it takes a half work week. These are high numbers, but it is possible to stipulate that when creating new test cases for the forms used, the effort should be smaller. New test cases could mean trying
+			different kinds of input in the fields that we have used (for example, different values for mileage in case 2). 
+
+			In both cases, some of the original test case can be reused for the updated or added test case. For example, in the first case it takes four steps before accessing the form that we wish to test. These four steps are not required to reproduce when writing other tests for that form.
+			
+			For the second method on the other hand, creating tests for a few different test cases takes about 2 work days. During this time we have produced tests that cover several different inputs. It is however harder in this case to estimate how much of the work done can be reused for other scenarios.
+
+
 		\subsection{Effort}
-		\subsection{Difficulties - lessons learned}
+
+			\subsubsection{GUI changes}
+
+			\begin{table}[h!]
+				\begin{tabular}{l l l l}
+				        & Base scenario & Updated scenario & Delta\\
+				 Case 1 & 5      & 7     & +2 \\
+				 Case 2 & 12     & 14    & +2 \\
+				 \end{tabular}
+				 \caption{Amount of GUI controls used in the tests}
+			 \end{table}
+
+			 This is interesting because of maintainability - changing gui often means breaking tests - Reference to GUI testing - drawbacks?
+
+			 It is possible to conclude that the changes that have been implemented here are relatively small and comparable in size. In both cases, two new controls are accessed after the change has been introduced. We know from the previous analysis of the work items for the two modules that these types of changes are typical for the Workshop and Fuel modules.
+
+			 \subsubsection{Code changes}
+
+			 Here I'll put a table with measurements for amount of code changed.
+
+		\subsection{Test runtime}
+
+			\begin{table}[h!]
+				\begin{tabular}{l |l |l l}
+				        & Scenario & Number of tests & Time (ms)\\
+				\hline
+				 GUI tests & Base     & 1               & 37000 \\
+				        & Updated  & 1    			 & 61000 \\
+				\hline
+				 Unit tests & Base     & 5               & 45 \\
+				 		& Updated  & 7               & 46 \\
+				 \end{tabular}
+				 \caption{Measured average runtime after 10 runs for case 1 - Service Object List}
+			 \end{table}
+
+
+			\begin{table}[h!]
+				\begin{tabular}{l |l |l l}
+				        & Scenario & Number of tests & Time (ms)\\
+				\hline
+				 GUI tests & Base     & 1           & 6000 \\
+				           & Updated  & 1    		& 3000 \\
+				\hline
+				 Unit tests & Odometer & 10         & 18 \\
+				 		& Helper      & 5           & 17 \\
+				 \end{tabular}
+				 \caption{Measured average runtime after 10 runs for case 2 - Odometer}
+			 \end{table}
+
+
+		\subsection{Lessons learned}
 			\subsubsection{Test environment}
 
 			Confirms the studies in Testing - Prerequisites?
@@ -399,8 +493,15 @@
 			Because of these problems, some workarounds have been introduced for the purpose of completing the thesis. In another scenario, I would recommend to solve this issue in a more permanent manner. The workarounds are explained in the different cases.
 
 			This is a difficulty for the GUI tests but it does not impact the unit tests.
+
+			\subsubsection{Differences in scope between the two methods}
+			Some reasoning about the fact that the unit tests will only test a small part of the code but also that the gui tests don't test what happens with an empty list, etc...
+
+			Estimation of time it would take to cover the same amount of scenarios with gui tests?
+
+
 		\subsection{Risks}
-		I know what happens and might optimize my code for that scenario.
+		I know what happens and might optimize my code for that scenario. For example, the test cases for case 1. 
 
 	\section{Further work}
 	- analysis of what kind of bugs to the methods catch

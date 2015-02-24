@@ -289,12 +289,90 @@
 				By breaking out the second and third steps into separate methods, they can be tested individually.
 				The method that produces a collection of service object that was made for the GUI test is helpful as input to the tests.
 
-				\begin{tabular}{l l l}
-				Given & When & Then \\
-				A collection with all kinds of service objects & A list is created & All objects are in \\
+				\begin{table}[h!]
+					\centering
+					\begin{tabular}{|p{1cm} p{7cm} |}
+					\hline
+					Given 	& A collection with all kinds of service objects \\ 
+					When 	& A list is created  \\	
+					Then 	& All objects are in it \\
+					\hline
+					\end{tabular}
+					\caption{Test case 1 - the service object list should contain all service objects}
+				\end{table}
 
-				\end{tabular}
+
+				\begin{table}[h!]
+					\centering
+					\begin{tabular}{|p{1cm} p{7cm} |}
+					\hline
+					Given 	& A collection with no objects with warnings\\ 
+					When 	& A list is created  \\	
+					Then 	& All objects are in it \\
+					\hline
+					\end{tabular}
+					\caption{Test case 2 - the service object list should contain all service objects}
+				\end{table}
+
+
+				\begin{table}[h!]
+					\centering
+					\begin{tabular}{|p{1cm} p{7cm} |}
+					\hline
+					Given 	& An empty collection \\ 
+					When 	& A list is created  \\	
+					Then 	& The list is empty \\
+					\hline
+					\end{tabular}
+					\caption{Test case 3 - the service object list is empty if there are no service objects}
+				\end{table}
+
+				\paragraph{Implementation of the updated scenario}
+				In the updated scenario, the entire list of service objects isn't displayed all the time. Rather, in one case only the checked objects and the external objects with warnings (in the work order) are to be displayed and in the other case the entire list is to be displayed (in the service list management window).
+
+				In code, this is being achieved by adding a new field: ShowAllObjects. Depending on whether ShowAllObjects is true or false, the list is generated with different criteria.
 				
+				This means that besides the two methods created in the base scenario, one more is added that creates a list with only the eligible items. The old tests can be kept, since they still apply to the other methods but it is necessary to create a new set of tests for the new method.
+
+					\begin{table}[h!]
+					\centering
+					\begin{tabular}{|p{1cm} p{7cm} |}
+					\hline
+					Given 	& A collection with all kinds of service objects \\ 
+					When 	& A list is created  \\	
+					Then 	& Only checked and external objects are in it \\
+					\hline
+					\end{tabular}
+					\caption{Test case 1 - the service object list should contain only checked and external service objects}
+				\end{table}
+
+
+				\begin{table}[h!]
+					\centering
+					\begin{tabular}{|p{1cm} p{7cm} |}
+					\hline
+					Given 	& A collection with no objects with warnings\\ 
+					When 	& A list is created  \\	
+					Then 	& Only external objects are in it \\
+					\hline
+					\end{tabular}
+					\caption{Test case 2 - there is no error when the list has no checked objects}
+				\end{table}
+
+
+				\begin{table}[h!]
+					\centering
+					\begin{tabular}{|p{1cm} p{7cm} |}
+					\hline
+					Given 	& An empty collection \\ 
+					When 	& A list is created  \\	
+					Then 	& The list is empty \\
+					\hline
+					\end{tabular}
+					\caption{Test case 3 - the service object list is empty if there are no service objects}
+				\end{table}
+
+				To be certain of the correctness of the refactoring, both the test suite of unit tests and the GUI tests can be run.
 
 		\subsection{Case 2: The Fuel Outtake and Odometer}
 			\subsubsection{Method one}

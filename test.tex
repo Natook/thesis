@@ -45,7 +45,7 @@
 	\pagenumbering{arabic}
 
 	\section{Introduction}
-	\subsection{Background}
+	\subsection{Setting the scene}
 		\subsubsection{About Nobina}
 		Nobina is the Nordic leader in scheduled public road transport services, with a market share of 16\%.
 		The company is also one of the ten largest public transport companies in Europe. It's most wellknown brand is Swebus Express which 2 million passengers use each year for long distance
@@ -71,6 +71,9 @@
 	\section{Testing}
 		\subsection{Purpose}
 		\subsection{Different levels of testing}
+			Differentiate manual testing vs exploratory testing? 
+			\subsubsection{Regression testing}
+
 		\subsection{Prerequisites}
 		What makes for a good test? Reproducable -> problems with test environment are interesting - test data?
 
@@ -79,14 +82,38 @@
 		A black box testing technique for end-to-end tests. 
 		\subsection{Advantages}
 		\subsection{Drawbacks}
+		Gui testing pitfalls: coverage criteria. The mapping between gui events and code is not straightforward. It is impractical to try to generate all test cases, a selection has to be made but it is also hard to select a good subset. \cite{pitfalls}
+
+		Layout changes means that the tests might need to be changed because components change. But also outputs can change. \cite{pitfalls}
+
 		Time consuming, false positives, flaky
 		Changing GUI means changing tests - doh!
+
+		Record and Play vs other
 
 	\section{Unit testing}
 		\subsection{Introduction}
 		A white box testing technique for small units of functionality
+
+
 		\subsection{Advantages}
+		An automated unit testing practice meant a 20.9\% decrease in test defects, and relative decrease of defects found by customers. \cite{unit}
+
+		Developers felt they spent less time fixing bugs found by testers. \cite{unit}
+
+		Raised awareness for error conditions and boundary cases. \cite{unit}
+
+		Understanding for code written by others. \cite{unit}
+
+		Harder for testers to find bugs \cite{unit}
+
 		\subsection{Drawbacks}
+
+		\susection{Success factors?}
+
+
+		\subsection{TDD}
+		\cite{unit} says 40\% fewer test defects with TDD and increased performance. 
 
 	\section{Legacy code and refactoring}
 		\subsection{Introduction}
@@ -122,7 +149,7 @@
 		IIn Refactoring for changeability: a way to go? and Measuring Technology Effects on Software Change Cost, it is shown in a case study that refactoring can significantly decrease the number of customer reported defects and effort needed to make changes.
 
 
-	\section{Approach}
+	\section{Approach and Methodology}
 		This section explains the approach used in this thesis which includes the procedure, the selection of cases for analysis, the comparison criteria from which the thesis will make a conclusion and the frameworks used to write the tests.
 
 		\subsection{Procedure}
@@ -164,9 +191,7 @@
 		Most work items are of moderate size and a few of the logic changes are a bit larger.
 		
 		\subsubsection{Future releases}
-		The interview reveals that more GUI changes are to be expected in the future as the GUI is being polished and the system owner stresses the need for increased usability. H
-
-		However we don't know for sure how the system will evolve in the future.
+		The interview reveals that more GUI changes are to be expected in the future as the GUI is being polished and the system owner stresses the need for increased usability. 
 
 		\subsection{Comparison criteria}
 			\subsubsection{Time}
@@ -186,7 +211,12 @@
 			suite, number of lines of modified test code and number of lines of modified system code. Inspired by this approach, this thesis will also present some of the same metrics.
 
 			\subsubsection{Test runtime}
+			One of the conclusions in \cite{unit} was that it should be easy to run the unit test suite and that the run time for the test suite needs to be short. 
 
+			\subsubsection{Code complexity}
+
+			\subsubsection{Defects}
+			A typical criteria for judging the effectiveness of a test technique is the number and severity of the defects it catches (such as it is done in \cite{unit}). However, this requires studying the system over a longer period of time to uncover those defects. 
 
 		\subsection{Frameworks}
 
@@ -253,7 +283,7 @@
 			When the mechanic closes the work order, the system makes the conclusion that the checked items in the list have received service and updates the database accordingly.
 
 
-			\subsubsection{Method one - GUI test}
+			\subsubsection{GUI test}
 
 
 				\paragraph{Issues with test data}
@@ -291,7 +321,7 @@
 					\item Verify that all service objects are displayed in the checked list
 				\end{enumerate}
 
-			\subsubsection{Method two - Unit tests}
+			\subsubsection{Unit tests}
 				The change that is being introduced in the code concerns which items from the service object list are displayed in the checked list.
 
 				[Code snippet]
@@ -432,7 +462,7 @@ End Sub
 
 
 
-			\subsubsection{Method one - GUI test}
+			\subsubsection{GUI test}
 
 			\paragraph{Base scenario}
 
@@ -462,7 +492,7 @@ End Sub
 				\item Verify that the amount of driven kilometers is correct
 			\end{enumerate}
 
-			\subsubsection{Method two}
+			\subsubsection{Unit tests}
 
 			In the source of the form there is a method
 			\begin{lstlisting}
@@ -643,6 +673,8 @@ End Sub
 		A separate test environment for gui testing
 
 \begin{thebibliography}{1}
+\bibitem{pitfalls} Atif M. Memon, {\em GUI Testing: Pitfalls and Process}, Computer, 2002
+\bibitem{unit} Laurie Williams, Gunnar Kudrjavets and Nachiappan Nagapan {\em On the Effectiveness of Unit Test Automation at Microsoft}, Department of Computer Science, North Carolina State University
 \bibitem{legacy} Michael Feathers {\em Working Effectively with Legacy Code} 2004: Prentice Hall
 \bibitem{refactor} Martin Fowler {\em Refactoring - Improving the design of everyday code} 1999: Addison-Wesley Professional
 \bibitem{regression} Skoglund and Runeson {\em A Case Study on Regression Test Suite Maintenance in System Evolution} 2004 

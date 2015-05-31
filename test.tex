@@ -26,7 +26,8 @@
 }
 
 
-\title{Master Thesis}
+\title{Introducing Automated Testing to a Legacy System}
+\subtitle{Master Thesis}
 \author{Ulrika Malmgren}
 
 \begin{document}
@@ -66,21 +67,54 @@
 		For a warmfix, only the concerned functionality is tested but for a regular release the entire system is tested.
 
 	\subsection{Problem statement}
-		Testing in this way is really expensive and Nobina wishes to lower their testing costs and using automated testing instead. 
+		Testing in this way is really expensive and Nobina wishes to lower their testing costs and using automated testing instead. They have identified two main techniques for approaching automated testing: Graphical User Interface testing (GUI testing) and unit testing. Nobina wishes to find out which of these two approaches is preferrable to choose in order to reduce their testing costs.  
 
 	\section{Testing}
 		\subsection{Purpose}
-		\subsection{Different levels of testing}
-			Differentiate manual testing vs exploratory testing? 
-			\subsubsection{Regression testing}
+		
+		\subsection{Testing techniques}
+		There are a lot of different testing techniques. This section aims at describing a few of them which are relevant for this thesis.
+			
+			\subsubsection{Black box testing}
+			Black box testing is a strategy in which no knowledge of the internal structure of the system under test is required. It can be applied at all levels of the systems from unit to system testing. 
 
-		\subsection{Prerequisites}
-		What makes for a good test? Reproducable -> problems with test environment are interesting - test data?
+			A disadvantage of black box testing is that it is impossible to be sure of the coverage of the tests since the internal structure isn't known.
+
+			\subsubsection{White box testing}
+			In contrast to black box testing, in white box testing, the internal structure guides testing. It can also be applied to all levels of the system but usually requires programming skills to perform. An example of black box testing is unit testing.
+
+			\subsubsection{Regression testing}
+			Regression testing is the process of testing in order to find a regression, functionality which has worked in the past but which has stopped working. Regression testing is typically performed right before a release to make sure that in the addition to the new functionality, the old functionality is also working as intended.
+			
+			\subsubsection{Scripted testing}
+			Following a list of predefined test cases is called scripted testing. The test cases can be specified in a test management tool or a simpler tool like a spreadsheet. The tester will repeat the test cases exacly as specified and write down any anomalies compared to the script. 
+			The advantage of scripted testing is that it can be performed by anyone who knows how to read the script and that it is consistent in its coverage of the system. 
+			Drawbacks include the human error factor of doing repetitive tasks over and over again and the time requirements of performing these tests. There is also concern about the amount of defects such an approach really finds compared to an approach where the script isn't followed step by step. \cite{snakeoil} 
+
+			\subsubsection{Automated testing}
+			Automated testing is writing code to perform tests on the system. By automating tests, they can be run by any one in the development team (or for example a build server) and can provide feedback fast about the state of the system. The automated tests are very similar to the scripted tests since the main difference between them is that a computer performs the automated tests and a human performs the scripted tests. 
+			They have an advantage over the scripted tests since they are not prone to human error when performing the tests and can be faster. 
+
+			However, they are not entirely free from impact of human error since humans are still needed to write the tests and run them. \cite{snakeoil} 
+
+			For example, a risk with automated testing is that automating bad tests only means that bad tests will be performed faster. A bad test could be a test which doesn't actually test anything, it would pass in every scenario. The automated test will provide a false sense of security without actually providing any.  \cite{lessons}
+
+			Automated testing can be performed on a lot of different levels in the system such as API, GUI, unit, integration, and so on. In this thesis, only unit and GUI testing are considered.
+
+			\subsection{Prerequisites for effective testing}
+
+			What makes for a good test? Reproducable -> problems with test environment are interesting - test data?
 
 	\section{GUI testing}
 		\subsection{Introduction}
 		A black box testing technique for end-to-end tests. 
+
+		\subsection{Record and play}
+		I plan to write about how my GUI-test framework isn't record and play and why that is good. So should I write about record and play here or when I describe it?
+
 		\subsection{Advantages}
+		Being a black box testing technique, automated GUI testing doesn't require knowledge of the internal structure of the system and the tests can be set up without it.
+
 		\subsection{Drawbacks}
 		Gui testing pitfalls: coverage criteria. The mapping between gui events and code is not straightforward. It is impractical to try to generate all test cases, a selection has to be made but it is also hard to select a good subset. \cite{pitfalls}
 
@@ -93,19 +127,12 @@
 
 	\section{Unit testing}
 		\subsection{Introduction}
-		A white box testing technique for small units of functionality
+		A white box testing technique for the smallest units of functionality that comprise a software system: functions, classes and methods. 
 
+		When unit testing is performed well, the units are tested in isolation as opposed to integration testing when the units are tested together. This means that the tests will find defects in the internal workings of the units and not in their interaction with other units.
 
 		\subsection{Advantages}
-		An automated unit testing practice meant a 20.9\% decrease in test defects, and relative decrease of defects found by customers. \cite{unit}
-
-		Developers felt they spent less time fixing bugs found by testers. \cite{unit}
-
-		Raised awareness for error conditions and boundary cases. \cite{unit}
-
-		Understanding for code written by others. \cite{unit}
-
-		Harder for testers to find bugs \cite{unit}
+		In \textit{On the Effectiveness of Unit Test Automation at Microsoft}, a number of advantages with unit testing are presented. For example, an automated unit testing practice meant a 20.9\% decrease in test defects, and relative decrease of defects found by customers. Also, developers felt they spent less time fixing bugs found by testers. Unit testing was said to raise awareness for error conditions and boundary cases as well as increasing the understanding for code written by others. The study reported that it was harder for testers to find bugs after the introduction of a unit testing approach than before. \cite{unit}
 
 		\subsection{Drawbacks}
 
@@ -114,6 +141,8 @@
 
 		\subsection{TDD}
 		\cite{unit} says 40\% fewer test defects with TDD and increased performance. 
+
+		I didn't use TDD, do I still mention this?
 
 	\section{Legacy code and refactoring}
 		\subsection{Introduction}
@@ -214,9 +243,13 @@
 			One of the conclusions in \cite{unit} was that it should be easy to run the unit test suite and that the run time for the test suite needs to be short. 
 
 			\subsubsection{Code complexity}
+			As shown, an advantage of reducing complexity of the code is that a code base with less complaxity is less prone to errors and therefor it is interesting to observe if the code complexiy goes up or down with both methods.   
 
 			\subsubsection{Defects}
 			A typical criteria for judging the effectiveness of a test technique is the number and severity of the defects it catches (such as it is done in \cite{unit}). However, this requires studying the system over a longer period of time to uncover those defects. 
+
+			\subsection{Training}
+			Since none of these methods are currently in place at Nobina, a certain amount of training will be required for the developers to learn how to apply them. It is interesting to compare how much training this would be in both cases.
 
 		\subsection{Frameworks}
 
@@ -243,12 +276,16 @@
 
 			Since the elements are accessed with code and not through a recording, the tests are less sensitive to changes in the GUI. For example, as a long as a button keeps the same automation id, it doesn't matter if it is moved to another place on the GUI. 
 
-			SOURCE FOR THIS BEING GOOD!!!
-
-
 			\subsubsection{NUnit}
-			(For unit)
-			Write about mocks/stubs?
+			NUnit is an open source framework for unit testing all .Net languages. \cite{nunit}
+
+			Eh... what else?
+
+
+		\subsection{Ethics}
+
+		\subsection{Sustainability}
+
 
 	\section{Case studies}
 		\subsection{Case 1: The Service Object List}
@@ -627,15 +664,22 @@ End Sub
 			There are interesting observations to make regarding the runtime measurements. 
 
 			\paragraph{Differences between the GUI tests}
-			Surprisingly, the second case utilizes more components (see table x in amount of change) yet runs faster. An explanation for this is that when White searches the GUI for a specific component it goes through all of the components in the target window. This means that in a window with many components search will be slower than in one with fewer components. This is the case here as the window containing the list of jobs in the service object list case is more complex than the fuel
-			outtake window in the other case.
+			Surprisingly, the second case utilizes more components (see table x in amount of change) yet runs faster. An explanation for this is that when White searches the GUI for a specific component it goes through all of the components in the target window. This means that in a window with many components search will be slower than in one with fewer components. This is the case here as the window containing the list of jobs in the service object list case is more complex than the fuel outtake window in the other case.
 
 			\paragraph{Differences between unit tests}
 			A difference in runtime for the unit tests in the different cases is noticed with around 46 ms in the first case and around 18 ms in the second case. An explanation for this is the different type of inputs for the different tests. In the first case, we manipulate collections of data (lists of service objects) whereas the tests for the second case handles short strings (mileages).
 
 			\paragraph{Differences between the two test types}			
-			More importantly, it is possible to tell that the tests from method 2 are 150 to 1300 times faster than the tests from method 1. Also with the unit tests it is possible to run several tests in a single run very fast compared to the GUI tests. In order to test a lot of different inputs with GUI it would take some time but this can be achieved swiftly with the tests in method 2.
+			More importantly, it is possible to tell that the gui tests are 150 to 1300 times faster than the unit tests. Also with the unit tests it is possible to run several tests in a single run very fast compared to the GUI tests. In order to test a lot of different inputs with GUI it would take some time but this can be achieved swiftly with the unit tests.
 
+		\subsection{Code complexity}
+		
+		\subsection{something...}
+
+		\subsection{Defects}	
+		During the work with the case study of the odometer, one defect was discovered during the refactoring process. Regardless of if the user answered \"yes\" or \"no\", the code would update the odometer when it was supposed to only update it on \"yes\". This defect couldn't have been discovered by the GUI test, because in the scenario it went through, the user always answered \"yes\". One would have to create a new scenario to catch this defect. 
+
+		However, because the system wasn't observed for a long time, it isn't possible to know at this point which method would find the most defects over a longer period of time.
 
 		\subsection{Lessons learned}
 			\subsubsection{Test environment}
@@ -661,6 +705,14 @@ End Sub
 
 			Estimation of time it would take to cover the same amount of scenarios with gui tests?
 
+			\subsubsection{GUI tests}
+			The GUI tests were faster to 
+
+			\subsubsection{Unit tests}
+			Unit tests are fast to run and because of their white box nature, can find defects in the functions that they test. A developer is able to run the unit tests in between small code changes without loosing much time, thus ensuring that the changes haven't broken anything. 
+
+			However they require a refactoring effort before being put in place and this effort requires advanced training. 
+
 		\subsection{Risks}
 		I know what happens and might optimize my code for that scenario. For example, the test cases for case 1. 
 
@@ -673,12 +725,15 @@ End Sub
 		A separate test environment for gui testing
 
 \begin{thebibliography}{1}
+\bibitem{snakeoil} James Bach,{\em Test Automation Snake Oil}, http://www.satisfice.com/articles/test_automation_snake_oil.pdf, 1999 
+\bibitem{lessons} Cem Kaner, James Bach and Bret Pettichord, {\em Lessons Learned in Software Testing}, Wiley, 2002
 \bibitem{pitfalls} Atif M. Memon, {\em GUI Testing: Pitfalls and Process}, Computer, 2002
 \bibitem{unit} Laurie Williams, Gunnar Kudrjavets and Nachiappan Nagapan {\em On the Effectiveness of Unit Test Automation at Microsoft}, Department of Computer Science, North Carolina State University
 \bibitem{legacy} Michael Feathers {\em Working Effectively with Legacy Code} 2004: Prentice Hall
 \bibitem{refactor} Martin Fowler {\em Refactoring - Improving the design of everyday code} 1999: Addison-Wesley Professional
 \bibitem{regression} Skoglund and Runeson {\em A Case Study on Regression Test Suite Maintenance in System Evolution} 2004 
 \bibitem{white} {\em Project White} https://github.com/TestStack/White
+\bibitem{nunit} {\em NUnit} http://www.nunit.org/
 \end{thebibliography}
 
 \end{document}

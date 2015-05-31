@@ -66,7 +66,7 @@
 		For a warmfix, only the concerned functionality is tested but for a regular release the entire system is tested.
 
 	\subsection{Problem statement}
-		Testing in this way is really expensive and Nobina wishes to lower their testing costs and using automated testing instead. 
+		Testing in this way is expensive and Nobina wishes to lower their testing costs and using automated testing instead. 
 
 	\section{Testing}
 		\subsection{Purpose}
@@ -136,11 +136,10 @@
 
 			In another scenario, the code might be bad to begin with. Urgency or lack of time might have forced a developer to solve a problem quickly, without having the time to create a well-designed solution.
 
-			A third scenario is the one for this thesis, refactoring in order to be able to add automated tests for the system.
+			A third scenario is the one for this thesis, refactoring in order to be able to add automated tests for the system. If the code base lacks tests it might not be written in a way which accomodates for tests to be added by lack of clear interfaces for example. Refactoring is then necessary to be able to add test to this existing code base.
 
 			\subsubsection{Advantages}
-			Software design is improved by reducing complexity. Some techniques include removing
-			duplication, breaking up large functions into smaller ones, breaking dependencies, and so on.
+			Software design is improved by reducing complexity. Some techniques include removing duplication, breaking up large functions into smaller ones, breaking dependencies, and so on.
 			Reducing complexity of the software makes it easier to understand, simpler to maintain and less prone to involve bugs.
 
 			Improving understanding is important since there are more users of the code than one might initially think of. Besides the computer which reads and processes the code, there are the developers who will be reading the code after its been written. As a developer when a new feature is to be added or a bug is to be fixed, a lot of time is spent reading and trying to understand old code.
@@ -203,7 +202,7 @@
 			
 			Even though a lot of focus is placed on the maintenance effort for the tests, the time it takes to set up the tests will also be recorded. If one method is very costly it, this needs to be taken into account when comparing the two. As a matter of fact, if both methods are costly, it will still be interesting to know this.
 
-			\subsubsection{Changes}
+			\subsubsection{Changes required}
 			There are other ways of measuring effort as well. In {\em A Case study on Regression Test Suite Maintenance in System Evolution} \cite{regression}, the authors log the steps of their work during its progress. 
 			Their work builds on top of a previous case study where a system has been added a feature using three different change strategies. Skoglund and Runeson look at the maintenance effort required to update the test suite of the system in each case. 
 
@@ -216,7 +215,7 @@
 			\subsubsection{Code complexity}
 
 			\subsubsection{Defects}
-			A typical criteria for judging the effectiveness of a test technique is the number and severity of the defects it catches (such as it is done in \cite{unit}). However, this requires studying the system over a longer period of time to uncover those defects. 
+			A typical criteria for judging the effectiveness of a test technique is the number and severity of the defects it catches (such as it is done in \cite{unit}). 
 
 		\subsection{Frameworks}
 
@@ -570,7 +569,7 @@ End Sub
 			For the second method on the other hand, creating tests for a few different test cases takes about 2 work days. During this time we have produced tests that cover several different inputs. It is however harder in this case to estimate how much of the work done can be reused for other scenarios.
 
 
-		\subsection{Effort}
+		\subsection{Changes required}
 
 			\subsubsection{GUI changes}
 
@@ -636,6 +635,10 @@ End Sub
 			\paragraph{Differences between the two test types}			
 			More importantly, it is possible to tell that the tests from method 2 are 150 to 1300 times faster than the tests from method 1. Also with the unit tests it is possible to run several tests in a single run very fast compared to the GUI tests. In order to test a lot of different inputs with GUI it would take some time but this can be achieved swiftly with the tests in method 2.
 
+		\subsection{Code complexity}
+
+		\subsection{Defects}
+		During the refactoring work in the Odometer case study, one defect was discovered. Regardless of whether the user selected `yes' or `no' 
 
 		\subsection{Lessons learned}
 			\subsubsection{Test environment}

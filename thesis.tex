@@ -66,25 +66,40 @@
 		For a warmfix, only the concerned functionality is tested but for a regular release the entire system is tested.
 
 	\subsection{Problem statement}
-		Testing in this way is expensive and Nobina wishes to lower their testing costs and using automated testing instead. They have identified two main techniques for approaching automated testing: Graphical User Interface testing (GUI testing) and unit testing. Nobina wishes to find out which of these two approaches is preferrable to choose in order to reduce their testing costs.  
+		Testing in this way is expensive and Nobina wishes to lower their testing costs by using automated testing instead. They have identified two main techniques for approaching automated testing: Graphical User Interface testing (GUI testing) and unit testing. Nobina wishes to find out which of these two approaches is preferrable to choose in order to reduce their testing costs.  
 
-		(Present the problems found in the area. Preferable use and end this section with a question as a problem statement.)
+		However, because of the OMS system has been in development for several years and testability hasn't been in a factor in the development process, introducing testing has challenges. The code must be altered in order to introduce tests. The developers are not trained in automated testing and the test environment is not designed to support it.
 
+		The question this thesis attempts to answer is: is it preferrable to introduce automated in the form of GUI testing or unit testing to reduce testing costs for the OMS system?
+
+	\subsection{Purpose}
+		The purpose of the thesis is to discuss and compare two different methods of introducing automated testing to a legacy system.
+		
 	\subsection{Goal}
+		The result of the thesis is a conclusion based on a selection of comparison criteria and lessons learned from apply the two different test automation techniques.
 
 		\subsubsection{Benefits, Ethics and Sustainability}
+		The development team at Nobina benefits from the thesis by receiving input towards selecting a strategy for introducing automated testing.
 
+		The thesis work is conducted internally at Nobina in parallell with the development team. Except for the lead developer and the thesis supervisor, no one was affected by the work. Hence, there are no ethical implications from this thesis. 
+
+		From a sustainability point of view, the thesis does not impact the product lifecycle of Nobina products or the development team. 
 
 	\section{Testing}
 		\subsection{Purpose}
-		
+		Testing is the process of gathering information about a system with the intent that the information could be used for some purpose. \cite{perfect}
+
+		By testing, information is uncovered about the system's capabilities or lack thereof. This information can be used to make decisions about the system. For example, if it is ready for release or not, if there are defects which need to be fixed or if it meets the needs of its users.
+			
 		\subsection{Testing techniques}
-		There are a lot of different testing techniques. This section aims at describing a few of them which are relevant for this thesis.
+		There are a lot of different testing techniques which can be used to gather information. This section aims at describing a few of them which are relevant for this thesis.
 			
 			\subsubsection{Black box testing}
 			Black box testing is a strategy in which no knowledge of the internal structure of the system under test is required. It can be applied at all levels of the systems from unit to system testing. 
 
 			A disadvantage of black box testing is that it is impossible to be sure of the coverage of the tests since the internal structure isn't known.
+
+			An example of black box testing is GUI testing.
 
 			\subsubsection{White box testing}
 			In contrast to black box testing, in white box testing, the internal structure guides testing. It can also be applied to all levels of the system but usually requires programming skills to perform. An example of black box testing is unit testing.
@@ -94,11 +109,14 @@
 			
 			\subsubsection{Scripted testing}
 			Following a list of predefined test cases is called scripted testing. The test cases can be specified in a test management tool or a simpler tool like a spreadsheet. The tester will repeat the test cases exacly as specified and write down any anomalies compared to the script. 
+			
 			The advantage of scripted testing is that it can be performed by anyone who knows how to read the script and that it is consistent in its coverage of the system. 
+			
 			Drawbacks include the human error factor of doing repetitive tasks over and over again and the time requirements of performing these tests. There is also concern about the amount of defects such an approach really finds compared to an approach where the script isn't followed step by step. \cite{snakeoil} 
 
 			\subsubsection{Automated testing}
 			Automated testing is writing code to perform tests on the system. By automating tests, they can be run by any one in the development team (or for example a build server) and can provide feedback fast about the state of the system. The automated tests are very similar to the scripted tests since the main difference between them is that a computer performs the automated tests and a human performs the scripted tests. 
+			
 			They have an advantage over the scripted tests since they are not prone to human error when performing the tests and can be faster. 
 
 			However, they are not entirely free from impact of human error since humans are still needed to write the tests and run them. \cite{snakeoil} 
@@ -179,8 +197,16 @@
 
 			Improving understanding is important since there are more users of the code than one might initially think of. Besides the computer which reads and processes the code, there are the developers who will be reading the code after its been written. As a developer when a new feature is to be added or a bug is to be fixed, a lot of time is spent reading and trying to understand old code.
 
-		(Why is it good to break dependencies, why is separation of concerns good? Do I need to add a part about design that increases testability, or do I keep it here?)
-		IIn Refactoring for changeability: a way to go? and Measuring Technology Effects on Software Change Cost, it is shown in a case study that refactoring can significantly decrease the number of customer reported defects and effort needed to make changes.
+			Less effort required after changes in \cite{refactor_for_changeability}.
+
+		\subsection{Testability in code}
+			\subsubsection{Single responsibility principle}
+			Break dependencies 
+			Separation of concerns
+
+			\subsubsection{Code complexity}
+
+			IIn Refactoring for changeability: a way to go? and Measuring Technology Effects on Software Change Cost, it is shown in a case study that refactoring can significantly decrease the number of customer reported defects and effort needed to make changes.
 
 
 	\section{Approach and Methodology}
@@ -605,6 +631,7 @@ End Sub
 			For the second method on the other hand, creating tests for a few different test cases takes about 2 work days. During this time we have produced tests that cover several different inputs. It is however harder in this case to estimate how much of the work done can be reused for other scenarios.
 
 
+			Both approaches require refactoring before actually getting the test to run.
 		\subsection{Changes required}
 
 			\subsubsection{GUI changes}
@@ -730,12 +757,14 @@ End Sub
 		A separate test environment for gui testing
 
 \begin{thebibliography}{1}
+\bibitem{perfect} Gerald M. Weinberg, {\em Perfect Software: and other illusions about testing}, Dorset House, 2008
 \bibitem{snakeoil} James Bach,{\em Test Automation Snake Oil}, http://www.satisfice.com/articles/test\_automation\_snake\_oil.pdf, 1999 
 \bibitem{lessons} Cem Kaner, James Bach and Bret Pettichord, {\em Lessons Learned in Software Testing}, Wiley, 2002
 \bibitem{pitfalls} Atif M. Memon, {\em GUI Testing: Pitfalls and Process}, Computer, 2002
 \bibitem{unit} Laurie Williams, Gunnar Kudrjavets and Nachiappan Nagapan {\em On the Effectiveness of Unit Test Automation at Microsoft}, Department of Computer Science, North Carolina State University
 \bibitem{legacy} Michael Feathers {\em Working Effectively with Legacy Code} 2004: Prentice Hall
 \bibitem{refactor} Martin Fowler {\em Refactoring - Improving the design of everyday code} 1999: Addison-Wesley Professional
+\bibitem{refactor_for_changeability} Birgit Geppert, Audris Mockus, and Frank Rößler, {\em Refactoring for Changeability: A way to go?}, 2005
 \bibitem{regression} Skoglund and Runeson {\em A Case Study on Regression Test Suite Maintenance in System Evolution} 2004 
 \bibitem{white} {\em Project White} https://github.com/TestStack/White
 \bibitem{nunit} {\em NUnit} http://www.nunit.org/

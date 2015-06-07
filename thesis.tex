@@ -26,8 +26,7 @@
 }
 
 
-\title{Introducing Automated Testing to a Legacy System}
-\subtitle{Master Thesis}
+\title{Introducing Automated Testing to a Legacy System \\\ Master Thesis}
 \author{Ulrika Malmgren}
 
 \begin{document}
@@ -68,6 +67,13 @@
 
 	\subsection{Problem statement}
 		Testing in this way is expensive and Nobina wishes to lower their testing costs and using automated testing instead. They have identified two main techniques for approaching automated testing: Graphical User Interface testing (GUI testing) and unit testing. Nobina wishes to find out which of these two approaches is preferrable to choose in order to reduce their testing costs.  
+
+		(Present the problems found in the area. Preferable use and end this section with a question as a problem statement.)
+
+	\subsection{Goal}
+
+		\subsubsection{Benefits, Ethics and Sustainability}
+
 
 	\section{Testing}
 		\subsection{Purpose}
@@ -136,7 +142,7 @@
 
 		\subsection{Drawbacks}
 
-		\susection{Success factors?}
+		\subsection{Success factors?}
 
 
 		\subsection{TDD}
@@ -281,16 +287,11 @@
 			Eh... what else?
 
 
-		\subsection{Ethics}
-
-		\subsection{Sustainability}
-
-
 	\section{Case studies}
 		\subsection{Case 1: The Service Object List}
 		In the Workshop module of the OMS system, focus is on keeping the vehicles in good shape by performing repairs and making sure that they receive servicing in due time. For this, a list of all the objects on the vehicles that can require servicing is being maintained in the database. 
 
-		For each service object has a certain interval between services. This can for example be after a certain amount of kilometers driven or after an amount of time. 
+		Each service object has a certain interval between services. This can for example be after a certain amount of kilometers driven or after an amount of time. 
 
 		Some objects are external objects and service is performed on them by an external contractor, the other objects are serviced in the Nobina workshops. When an object is up for service it is said that it has a warning.
 
@@ -308,9 +309,7 @@
 			\paragraph{Updated scenario}
 			{\em When opening a work order, only the service objects eligible should be displayed.}
 
-			In the service object management window, all the service objects should be displayed
-			
-			This is a new implementation of how the service objects are being presented and the feedback received says that it is hard to visualize which items should receive service since the list is quite long and the box rather small. The development team came up with the idea of showing only the eligible and external items with warnings in the list. The complete list of service object can be accessed by a button which opens up a new interface.
+			The feedback received says that it is hard to visualize which items should receive service since the list is quite long and the box rather small. The development team came up with the idea of showing only the eligible and external items with warnings in the list. The complete list of service object can be accessed by a button which opens up a new interface.
 
 			Fig x. Service object list management window.
 
@@ -326,13 +325,13 @@
 				
 				In order to be able to develop tests for this scenario, it is crucial to have access to a bus that is in need of service and to know which service objects will be in the list. 
 
-				However this information isn’t stable. For one, because of the nature of service objects whose status in some cases is updated every day. Also since the test database is updated every two days, a vehicle can be repaired and be taken off the list of work orders. This means that the test data would need to be updated every day with new information.
+				However this information is not stable. For one, because of the nature of service objects whose status in some cases is updated every day. Also since the test database is updated every two days, a vehicle can be repaired and be taken off the list of work orders. This means that the test data would need to be updated every day with new information.
 
 				To solve this, the first available vehicle in need of service is selected in the work order list instead of selecting a specific vehicle. 
 
-				Also, a conditional compilation statement is placed around the area of the code where the service object list is retrieved from the database. Since this information is retrieved as a collection, a method is implemented to be able to create a collection with test data easily. With the conditional compilation we are able to either compile a normal version of the system, or one where our test data is used instead. 
+				Also, a conditional compilation statement is placed around the area of the code where the service object list is retrieved from the database. With the conditional compilation it is possible to either compile a normal version of the system, or one where specific test data is used instead.  Since this information is retrieved as a collection, a method is implemented to be able to create a collection with test data.
 
-				This is needed to get the GUI tests to work without a proper test database but we will see that it also good support for the tests written in method 2.
+				This is needed to get the GUI tests to work without a proper test database but it is also good support for the unit tests written.
 
 				\paragraph{Implementation of base scenario}
 				
@@ -359,8 +358,6 @@
 
 			\subsubsection{Unit tests}
 				The change that is being introduced in the code concerns which items from the service object list are displayed in the checked list.
-
-				[Code snippet]
 				
 				\paragraph{Test cases for the base scenario} 
 				The method works in four steps. First a collection of service objects is retrieved from the database.
@@ -422,7 +419,7 @@
 					Then 	& Only checked and external objects are in it \\
 					\hline
 					\end{tabular}
-					\caption{Test case 1 - the service object list should contain only checked and external service objects}
+					\caption{Test case 4 - the service object list should contain only checked and external service objects}
 				\end{table}
 
 
@@ -435,7 +432,7 @@
 					Then 	& Only external objects are in it \\
 					\hline
 					\end{tabular}
-					\caption{Test case 2 - there is no error when the list has no checked objects}
+					\caption{Test case 5 - there is no error when the list has no checked objects}
 				\end{table}
 
 
@@ -448,13 +445,13 @@
 					Then 	& The list is empty \\
 					\hline
 					\end{tabular}
-					\caption{Test case 3 - the service object list is empty if there are no service objects}
+					\caption{Test case 6 - the service object list is empty if there are no service objects}
 				\end{table}
 
-				To be certain of the correctness of the refactoring, both the test suite of unit tests and the GUI tests can be run.
+				To be certain of the correctness of the refactoring, both the test suite of unit tests and the GUI tests can be run. By running the GUI test, it is possible to feel confident that the code changes done have not created any defects since the GUI test would likely fail in that case. This is true for both the original scenario and the updated scenario.
 
 				\paragraph{Implementation}
-				Here is an example test for the updated scenario:
+				An example test for the updated scenario:
 
 				\begin{lstlisting}
 <Test()> Public Sub Given_DataViewWithAllKindsOfserviceItems_When_ArrayListIsCreated_
@@ -480,23 +477,27 @@ End Sub
 
 			\subsection{Case 2: The Fuel Outtake and Odometer}
 
-			This case involves the Kilometers and Fuel module where it is possible to add fuel outtakes and readings for odometers, pumps, cisterns and so on. Every time a driver makes a fuel outtake he needs to add it to the OMS system with the date, time, new mileage for the vehicle and volume of the outtake.
+			This case involves the Kilometers and Fuel module where it is possible to add fuel outtakes and readings for odometers, pumps, cisterns and so on. Every time a driver makes a fuel outtake they needs to add it to the OMS system with the date, time, new mileage for the vehicle and volume of the outtake.
 
 			A special case which can occur is when the odometer reaches 999 999 and rolls over to 0. When the user tries to enter a value for mileage that is smaller than the previous mileage, an error is registered and fuel outtake is flagged in the system. A manager then needs to handle it and call support to make a manual change in the database.
-			Since this is extra work for the managers, a solution has been devised to handle one roll over of the odometer. When the system notices that the previous mileage is larger than 900 000 and that the new mileage entered by the user is smaller than 10000, a dialog box is displayed asking the keuser if the odometer has rolled over. When the user selects yes, the database is updated accordingly.
 
-			The basic test scenario is Adding a fuel outtake should be saved properly.
-			The new scenario is Adding a fuel outtake when the odometer is about to roll over should trigger a dialog box.
+			\paragraph{Base scenario}
+			  {\em Adding a fuel outtake should be saved}
+
+			It is not possible to save a fuel outtake with an odometer value smaller than the original so the base scenario tests that saving a normal odometer value works correctly. 
+
+			\paragraph{Updated scenario}
+			  {\em Adding a fuel outtake when the odometer is about to roll over should trigger a dialog box}
+
+			Since this is extra work for the managers, a solution has been devised to handle one roll over of the odometer. When the system notices that the previous mileage is larger than 900 000 and that the new mileage entered by the user is smaller than 10000, a dialog box is displayed asking the keuser if the odometer has rolled over. When the user selects yes, the database is updated accordingly.
 
 			\paragraph{Prerequisites}
 			Because it is not possible to save a fuel outtake with invalid parameters, it is not possible to repeatedly save fuel outtakes for the same vehicle with the same parameters over and over again.
-			This means that each time the GUI test runs, we either need to change the inventory number for the vehicle or the time of the outtake.
-			Another issue concerns the case when we want to have a previous mileage that is larger than 900 000. In that case we would need to identify a vehicle with that mileage and use it in our test.
-			However, after the test is run, the database has been updated and the vehicle no longer fills that prerequisite. Since the number of vehicles with mileages around 990 000 are few, we have a limited amount of possibilities to test.
-			This is solved by adding conditional compilation to the source code. When compiling the source for tests, we change the previous mileage to satisfy our conditions.
-
-
-
+			This means that each time the GUI test runs, it is necessary to change the inventory number for the vehicle or the time of the outtake.
+			
+			Another issue concerns the case when a previous mileage that is larger than 900 000. In that case it is necessary to identify a vehicle with that mileage and use it in the test.
+			However, after the test is run, the database has been updated and the vehicle no longer fills that prerequisite. Since the number of vehicles with mileages around 990 000 are few, there are a limited amount of possibilities to test.
+			This is solved by adding conditional compilation to the source code. When compiling the source for tests, the previous mileage is changed to satisfy our conditions.
 
 			\subsubsection{GUI test}
 
@@ -530,7 +531,7 @@ End Sub
 
 			\subsubsection{Unit tests}
 
-			In the source of the form there is a method
+			In order to be able to create unit tests, some refactorings are needed. For example, in the source of the form there is a method with dependencies towards the GUI since it uses the information in some labels (lblReportFuelPreviousKm), the values of fields (txtKm.Text) and displays a dialog box.
 			\begin{lstlisting}
 Private Sub CheckIfKmOverOneMillionAndIfSoAskUserToCorrect()
 	If IsNumeric(lblReportFuelPreviousKm.Text) 
@@ -552,8 +553,6 @@ Private Sub CheckIfKmOverOneMillionAndIfSoAskUserToCorrect()
 End Sub
 		\end{lstlisting}
 
-			It has dependencies towards the GUI since it uses the information in some labels
-			(lblReportFuelPreviousKm), the values of fields (txtKm.Text) and displays a dialog box.
 			At the same time it performs some business logic based on the values in the labels, the text fields and a global variable called millionKM.
 			This method is refactored so that the business logic is broken out into an Odometer class with the single responsibility of handling properties and methods proper to the odometer. Since we break the dependencies towards the GUI, it is possible to write unit tests to test the Odometer class separetely.
 
@@ -627,6 +626,9 @@ End Sub
 
 			 Here I'll put a table with measurements for amount of code changed.
 
+			 \subsubsection{Test data}
+			 In both cases and in both methods, it was necessary to set up certain conditions for the tests to be able to run. The test data in the test environment wasn't in such a state that it was possible to design the tests without first figuring out how to create special data for the tests. This took some time and effort and created additional complexity for the tests. 
+
 		\subsection{Test runtime}
 
 			\subsubsection{Data}
@@ -680,6 +682,8 @@ End Sub
 
 		However, because the system wasn't observed for a long time, it isn't possible to know at this point which method would find the most defects over a longer period of time.
 
+		Confidence - because I started with GUI tests I could use them as indicator that the refactoring for unit tests didn't create any defects. This applied in both methods.
+
 		\subsection{Lessons learned}
 			\subsubsection{Test environment}
 
@@ -724,7 +728,7 @@ End Sub
 		A separate test environment for gui testing
 
 \begin{thebibliography}{1}
-\bibitem{snakeoil} James Bach,{\em Test Automation Snake Oil}, http://www.satisfice.com/articles/test_automation_snake_oil.pdf, 1999 
+\bibitem{snakeoil} James Bach,{\em Test Automation Snake Oil}, http://www.satisfice.com/articles/test\_automation\_snake\_oil.pdf, 1999 
 \bibitem{lessons} Cem Kaner, James Bach and Bret Pettichord, {\em Lessons Learned in Software Testing}, Wiley, 2002
 \bibitem{pitfalls} Atif M. Memon, {\em GUI Testing: Pitfalls and Process}, Computer, 2002
 \bibitem{unit} Laurie Williams, Gunnar Kudrjavets and Nachiappan Nagapan {\em On the Effectiveness of Unit Test Automation at Microsoft}, Department of Computer Science, North Carolina State University

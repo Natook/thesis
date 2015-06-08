@@ -81,7 +81,7 @@
 		\subsubsection{Benefits, Ethics and Sustainability}
 		The development team at Nobina benefits from the thesis by receiving input towards selecting a strategy for introducing automated testing.
 
-		The thesis work is conducted internally at Nobina in parallell with the development team. Except for the lead developer and the thesis supervisor, no one was affected by the work. Hence, there are no ethical implications from this thesis. 
+		The thesis work is conducted internally at Nobina in parallell with the development team. Except for the lead developer and the thesis supervisor, no one was affected by the work. No personal data was handled during the thesis work. Hence, there are no ethical implications from this thesis. 
 
 		From a sustainability point of view, the thesis does not impact the product lifecycle of Nobina products or the development team. 
 
@@ -287,7 +287,7 @@
 			Two different frameworks are used in this thesis. For GUI tests, the White framework and for unit tests, NUnit. 
 
 			\subsubsection{Project White}
-			For this purpose, an open source Framework for .NET applications called White is used. The framework is based on Microsoft's UIAutomation library and window messages. The UIAutomation library was originally developed for Assistive Technology products. That is, products designed to provide better access for individuals with physical or cognitive difficulties, impairments, or disabilities. \cite{white}
+			An open source Framework for .NET applications called White is used for the GUI tests. The framework is based on Microsoft's UIAutomation library and window messages. The UIAutomation library was originally developed for Assistive Technology products. That is, products designed to provide better access for individuals with physical or cognitive difficulties, impairments, or disabilities. \cite{white}
 
 			Through this API it is possible to interact with user interface (UI) elements. 
 			White provides functions that can be used to search for, access and manipulate UI elements in an application by name, automation id or type. 
@@ -711,13 +711,19 @@ End Sub
 
 		\subsection{Training}
 
+			\subsubsection{GUI tests}
+			Getting started with White Framework and the GUI tests was not hard. The framework had a decent amount of documentation and an active user group with forums for support. A lot of the issues which arise during the test creation can be solved with trial and error. Some issues required more investigation and research but were possible to solve without external help. 
 
+			Because White runs from outside the application and the GUI tests are black box tests, it is not necessary to understand the inner workings of the OMS application to be able to start creating tests.
+
+			\subsubsection{Unit tests}
+			When creating unit tests, it necessary to understand how they fit into the structure of the existing code base. Refactoring the code was sometimes easy when, for example, extracting a method for readibility but sometimes complex when it comes to introducing software patterns for testability. Guidance by the thesis supervisor was required to be able to perform these refactorings.
+
+			\subsubsection{Conclusion}
+			While the work of creating GUI tests was possible to conduct independently from the development team and with only a basic understanding of programming, refactoring and creating unit tests requires a deeper knowledge of programming, in particular unit testing. If the development team does not possess this knowledge before hand they would require mentoring and training while acquiring it.
 
 		\subsection{Lessons learned}
 			\subsubsection{Test environment}
-
-			Confirms the studies in Testing - Prerequisites?
-
 			For the OMS system, there is a test database that is a copy from the real database. Every other day, a fresh copy is made. All the developers share the same database. This presents a problem for this thesis. 
 
 			Since it is not possible to know if some data will be present in the future, it is not certain that the tests written today will still work tomorrow. In some cases, it is certain that they won't work. Why?

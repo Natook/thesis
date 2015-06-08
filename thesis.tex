@@ -724,19 +724,20 @@ End Sub
 
 		\subsection{Lessons learned}
 			\subsubsection{Test environment}
+			
 			For the OMS system, there is a test database that is a copy from the real database. Every other day, a fresh copy is made. All the developers share the same database. This presents a problem for this thesis. 
 
-			Since it is not possible to know if some data will be present in the future, it is not certain that the tests written today will still work tomorrow. In some cases, it is certain that they won't work. Why?
+			Since it is not possible to know if some data will be present in the future, it is not certain that the tests written today will still work tomorrow. The tests are not able to run over and over again on the same entities. 
 
-			Because of the complex structure of the database it is not possible to create specific test data that can be used for testing.
+			Because of the complex structure of the database it is not possible to create specific test data that can be used for testing in any easy way.
 
 			If the test requires a bus that has been driven a certain amount of kilometers, it is not possible to simply create such a bus. Neither is it possible to change the amount of kilometers for an existing bus because it might violate existing rules in the database. 
 
 			Also, some operation can only be performed once. For each time a test is rerun, a new object to perform the same action on has to be found.
 
-			Because of these problems, some workarounds have been introduced for the purpose of completing the thesis. In another scenario, I would recommend to solve this issue in a more permanent manner. The workarounds are explained in the different cases.
+			Because of these problems, some workarounds have been introduced for the purpose of completing the thesis by adding conditional compilation statements before running the tests. In another scenario, I would recommend to solve this issue in a more permanent manner. The conditional compilation works when used for a few scenarios but when the amount of tests grows, this will quickly become a new source of complexity.
 
-			This is a difficulty for the GUI tests but it does not impact the unit tests.
+			This is has a high impact on the feasibility of creating a large suit of GUI tests. 
 
 			\subsubsection{Differences in scope between the two methods}
 			Some reasoning about the fact that the unit tests will only test a small part of the code but also that the gui tests don't test what happens with an empty list, etc...

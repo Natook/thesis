@@ -1,8 +1,28 @@
 TODO:
 
-- Go through and write todo!
 - 2.3 Prerequisites for effective testing 	- WRITE!
 - 3. GUI testing 							- review and polish
 - 4.3 Drawbacks of unit testing 			- WRITE !
 - 4.4 Success factors of unit testing 		- WRITE!
 - 5 Legacy code and refactoring 			- review and polish
+- 6.3.3 Test runtime 						- review and polish
+- 6.3.5 Defects								- review and polish
+- 6.4.2 NUnit								- WRITE!
+
+Results
+- 8.1 Time									- review and polish
+- 8.2.1 GUI changes							- review and polish
+- 8.2.2 Code Changes 						- WRITE!
+- 8.2.3 Test Data							- review and polish
+- 8.3 Test runtime 							- review and polish
+- 8.7.2 Scope 								- WRITE!
+- 8.7.3 GUI tests							- review and polish
+- 8.7.4 Unit tests							- review and polish
+- 8.8 Risks 								- WRITE!
+- 9 Further work							- WRITE!
+- 10 Conclusion 							- WRITE!								
+
+DONE:
+- 8.6 Training 								- WRITE!
+- 8.7.1 Test environments					- review and polish
+- 8.5 Defects 								- review and polish

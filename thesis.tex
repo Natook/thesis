@@ -703,11 +703,18 @@ End Sub
 		\subsection{Code complexity}
 		
 		\subsection{Defects}	
-		During the work with the case study of the odometer, one defect was discovered during the refactoring process. Regardless of if the user answered `yes' or `no', the code would update the odometer when it was supposed to only update it on `yes'. This defect couldn't have been discovered by the GUI test, because in the scenario it went through, the user always answered `yes'. One would have to create a new scenario to catch this defect. 
+			\subsubsection{An odometer bug}
+			During the work with the case study of the odometer, one defect was discovered in the refactoring process. Regardless of if the user answered `yes' or `no', the code would update the odometer when it was supposed to only update it on `yes'. The GUI test doesn't discover this defect because in the scenario it went through, the user always answered `yes'. One would have to create a new scenario to catch it. 
 
-		However, because the system wasn't observed for a long time, it isn't possible to know at this point which method would find the most defects over a longer period of time.
+			This is an example where the white box nature of the unit tests makes a defect apparent since it was discovered while designing the tests. It wasn't the actual test which caught the bug but rather the process of reading the code carefully in order to do the refactoring. A code review or pair programming would probably have found the defect as well. 
 
-		Confidence - because I started with GUI tests I could use them as indicator that the refactoring for unit tests didn't create any defects. This applied in both methods.
+			However, if the defect had had impact on the GUI by for example making certain controls unusable, the unit test would not have been able to capture that behavior.
+
+			\subsubsection{Abilities to capture defects}
+			This was the only defect recorded during the thesis work and because the system wasn't observed for a long time, it isn't possible to know at this point which method would find the most defects over a longer period of time. 
+
+			\subsubsection{Tests as safety net for refactoring}
+			During the work of the thesis, the GUI tests were implemented first in both case studies. An interesting observation is that those GUI tests could then be run during the refactoring work to make sure that refactoring did not create any serious defects. The GUI tests were used as a safety net and created confidence about the code change. 
 
 		\subsection{Training}
 
@@ -739,9 +746,13 @@ End Sub
 
 			This is has a high impact on the feasibility of creating a large suit of GUI tests. 
 
-			\subsubsection{Differences in scope between the two methods}
-			Some reasoning about the fact that the unit tests will only test a small part of the code but also that the gui tests don't test what happens with an empty list, etc...
+			\subsubsection{Gathering information}
+			It wasn't possible to draw any conclusions about the amount of defects caught by the two methods. However, it is possible to reason about it based on the experience when creating the tests. 
 
+			While the GUI tests give a broad confidence about the stability of the system, the unit tests provide confidence about the business logic inside of the GUI code. since the GUI tests start up the system and navigate through a set of views to perform their tests, they indicate that the system is at least in such a shape that it is possible to run it and navigate through it. This information cannot be gathered from the unit tests since they do not start the system at all. 
+
+			In the example with the odometer bug it was observed that in order to catch this bug with GUI tests, several test runs would be required. Each test run for the odometer takes 6 minutes. Adding a new scenario means doubling this time in the worst case. This means that if an extensive test suite to cover the OMS application is desired, it would take a long time to run. It is more likely that a carefully selection of scenarios would be made in order to keep the suite's size and run time under control.  
+			
 			Estimation of time it would take to cover the same amount of scenarios with gui tests?
 
 			\subsubsection{GUI tests}
@@ -762,6 +773,8 @@ End Sub
 
 	\section{Conclusion}
 		A separate test environment for gui testing
+
+		Testing is the process of gathering information about a system with the intent to use it for some purpose, we can conclude that the different test methods gather different kinds of information at different costs.
 
 \begin{thebibliography}{1}
 \bibitem{perfect} Gerald M. Weinberg, {\em Perfect Software: and other illusions about testing}, Dorset House, 2008

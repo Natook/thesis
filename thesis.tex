@@ -263,6 +263,8 @@
 			
 			Even though a lot of focus is placed on the maintenance effort for the tests, the time it takes to set up the tests will also be recorded. If one method is very costly it, this needs to be taken into account when comparing the two. As a matter of fact, if both methods are costly, it will still be interesting to know this.
 
+			Because the procedure used is refactoring code, adding unit tests and then switching to a newer version of the code through the version control system, the refactored code will not in place after the new version has been switched to. The time it takes to reproduce the refactoring in the new version is not accounted for. This is because the interesting scenario is to see how much effort it takes to update the refactored code and its tests. 
+
 			\subsubsection{Changes required}
 			There are other ways of measuring effort as well. In {\em A Case study on Regression Test Suite Maintenance in System Evolution} \cite{regression}, the authors log the steps of their work during its progress. 
 			Their work builds on top of a previous case study where a system has been added a feature using three different change strategies. Skoglund and Runeson look at the maintenance effort required to update the test suite of the system in each case. 
@@ -545,6 +547,8 @@ End Sub
 				
 			\paragraph{Updated scenario}
 
+			IT IS NOT AN UPDATED SCENARIO, IT IS AN ADDITIONAL SCENARIO!
+
 			\begin{enumerate}
 				\item Steps 1-5 are the same as in the base scenario
 				\setcounter{enumi}{5}
@@ -586,52 +590,54 @@ End Sub
 
 	\section{Results}
 		\subsection{Time}
-		Both the efficient time spent on developing the tests and the total time spent on development has been measured. The efficient time is only the time used for coding whereas the total time accounts for problems with the development environment, time spent discussing issues, and so on.
-		In the tables below we can see the efficient and total times for developing the test cases before the anticipated change is rolled on and after it has been introduced.
+		
+		In the tables below we can see the times for developing the test cases before the anticipated change is rolled on (base scenario) and after it has been introduced (updated scenario).
 
 			\subsubsection{Data}
 
 			\begin{table}[h!]
-				\begin{tabular}{l | l l | l l |}
-				               & \multicolumn{2}{c}{Base scenario} & \multicolumn{2}{| c |}{Updated scenario}     \\
+				\begin{tabular}{l | l | l |}
+				               & {Base scenario} & {Updated scenario}     \\
 				\hline
-				 			   & Efficient & Total & Efficient & Total \\
-				 GUI tests     & 17        & 39    & 4         & 13    \\
-				 Unit tests    & 4         & 13    & 1         & 3   \\
+				 GUI tests     & 39    &  13    \\
+				 Unit tests    & 13    &  3   \\
 				 \end{tabular}
 				 \caption{Measured time in hours for Case 1: Service Objects}
 			 \end{table}
 
 			\begin{table}[h!]
-				\begin{tabular}{l | l l | l l |}
-				               & \multicolumn{2}{c}{Base scenario} & \multicolumn{2}{| c|}{Updated scenario}     \\
+				\begin{tabular}{l | l | l |}
+				               & {Base scenario} & {Updated scenario}     \\
 				\hline
-				 			   & Efficient & Total & Efficient & Total \\
-				 GUI tests     & 6         & 20    & 2         & 11    \\
-				 Unit tests    & 6         & 21    & 2         & 12    \\
+				 GUI tests     &  20     & 11    \\
+				 Unit tests    &  21     & 12    \\
 				 \end{tabular}
 				 \caption{Measured time in hours for Case 2: Odometer}
 			 \end{table}
 
-			In both cases, developing the GUI tests is more costly than doing the refactoring effort. In both cases, the before and after proportions are maintained when comparing the GUI tests to the unit tests. The original effort is four times as large as the effort for updating the tests in case 1 and three times as large in case 2. The maintenance effort is in both cases smaller than the original cost for setting up the tests.
+			\subsubsection{Designing tests}
+ 			When looking at the time measurements for designing the base scenario tests, it appears that in the Service Object Case, the effort for putting the GUI tests in place is much larger than the effort for the unit tests. 
 
-			In the second case both GUI tests and unit tests take as much time both to set up but also to update according to the change introduced. In the other however, the GUI tests take four times as much time to set up and update compared to the unit tests.
+ 			This can be explained by the fact that the Service Object Case was the first case developed and thus effort had to be put into learning the framework. Another explanation is that interacting the GUI testing framework with the service object list was complex and presented problems.  
 
-			\subsubsection{Analysis}
+ 			The procedure for accessing the form to test requires going through a few steps before it can be opened. The components in those steps are also more complex to work with in White than the ones in the fuel outtake form.
 
-			One explanation for the fact that the first scenario takes so much longer is that the GUI test for the Service object scenario was the first GUI test scenario implemented. It took time to learn how to access the different components used. 
+ 			In the Odometer Case, the results are different. Here, creating GUI tests and unit tests take a similar amount of time. In this case, the GUI components were straight forward to work with but the unit tests required mentoring to be able to complete. 
 
-			Also, the procedure for accessing the form to test is more complex in the Service Object scenario. Instead of opening it immediately from the Menu, it is required to go through a few steps before it is opened. The components in those steps are also more complex to work with in White than the ones in the fuel outtake form.
-			
-			Another interesting observation is the fact that in the first case, creating a GUI test for a single test case takes almost as long as one complete work week when taking into the account the entire effort of setting up the test, that is the total time measured. In the second case, it takes a half work week. These are high numbers, but it is possible to stipulate that when creating new test cases for the forms used, the effort should be smaller. New test cases could mean trying
-			different kinds of input in the fields that we have used (for example, different values for mileage in case 2). 
+			\subsubsection{Updating tests}
 
-			In both cases, some of the original test case can be reused for the updated or added test case. For example, in the first case it takes four steps before accessing the form that we wish to test. These four steps are not required to reproduce when writing other tests for that form.
-			
-			For the second method on the other hand, creating tests for a few different test cases takes about 2 work days. During this time we have produced tests that cover several different inputs. It is however harder in this case to estimate how much of the work done can be reused for other scenarios.
+			In both cases and with both methods, updating the tests takes a shorter amount of time than creating them. This is because the general structure for the test is already in place. 
 
+			For GUI tests, the steps leading up the to form where the change occurs are reused in the updated scenario. For unit tests on the other hand, the tests have to be changed and new added. 
 
-			Both approaches require refactoring before actually getting the test to run.
+			In the case of the Service Object List, it is interesting to see that the GUI tests which took longer to create also take longer to update. It seems that the complexity required to add the tests is maintained when the tests need to be updated.
+
+			\subsubsection{Conclusion}
+
+			It was known from the beginning that the time measurements would not provide any statistical evidence to conclude upon. It is possible to tell however that GUI tests might take longer to implement and update but not necessarily in all cases. 
+
+			Also, applying GUI testing to complex user interface components such as the service object list will take longer than simpler components. Both when the tests are created but also when they are updated. 
+
 		\subsection{Changes required}
 
 			\subsubsection{GUI changes}
@@ -763,6 +769,13 @@ End Sub
 
 			\subsubsection{GUI tests}
 			The GUI tests were faster to 
+
+			When the GUI tests handle complex user interface components, implementing tests takes longer both to create and to update when they change. These components also influence runtime of tests.
+
+			Perhaps something about reusing code to add tests and to do be able to work faster
+
+			``In both cases, some of the original test case can be reused for the updated or added test case. For example, in the first case it takes four steps before accessing the form that we wish to test. These four steps are not required to reproduce when writing other tests for that form.
+			''
 
 			\subsubsection{Unit tests}
 			Unit tests are fast to run and because of their white box nature, can find defects in the functions that they test. A developer is able to run the unit tests in between small code changes without loosing much time, thus ensuring that the changes haven't broken anything. 

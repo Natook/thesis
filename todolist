@@ -1,18 +1,18 @@
 TODO:
 
-- who wins which section?
-
 - 2.3 Prerequisites for effective testing 	- WRITE!
 - 3. GUI testing 							- review and polish
 - 4.3 Drawbacks of unit testing 			- WRITE !
 - 4.4 Success factors of unit testing 		- WRITE!
 - 5 Legacy code and refactoring 			- review and polish
-- 6.3.3 Test runtime 						- review and polish
+- 6.3.1 Time 								- review and polish						- 6.3.3 Test runtime 						- review and polish
 - 6.3.5 Defects								- review and polish
 - 6.4.2 NUnit								- WRITE!
 
+- something about how slow it was to use the service object list?
+- extending the tests further? reuse gui but not unit? different mileages in odometer
+
 Results
-- 8.1 Time									- review and polish
 - 8.2.1 GUI changes							- review and polish
 - 8.2.2 Code Changes 						- WRITE!
 - 8.3 Test runtime 							- review and polish
@@ -28,6 +28,8 @@ DONE:
 - 8.7.1 Test environments					- review and polish
 - 8.5 Defects 								- review and polish
 - 8.2.3 Test Data							- review and polish
+- who wins which section?
+- 8.1 Time									- review and polish
 
 ----------------------------------------------------------------------
 Who wins?

@@ -664,9 +664,9 @@ End Sub
 
 			 Also, some operation can only be performed once. For each time a test is rerun, a new object to perform the same action on has to be found.
 
-			 Because of these problems, some workarounds have been introduced for the purpose of completing the thesis by adding conditional compilation statements before running the tests.
+			 Because of these problems, some workarounds have been introduced for the purpose of completing the thesis by adding conditional compilation statements before running the tests. This means that test data was programmatically inserted into the system when the application was started with a `- test' flag. 
 
- 			 This was a problem for the GUI tests because it was necessary to set up certain conditions for the tests to be able to run. The test data in the test environment wasn't in such a state that it was possible to design the tests without first figuring out how to create special data for the tests. This took some time and effort and created additional complexity for the tests. 
+ 			 This was a problem for the GUI tests because it was necessary to set up certain conditions for the tests to be able to run. The test data in the test environment was not in such a state that it was possible to design the tests without first figuring out how to create special data for the tests. This took some time and effort and created additional complexity for the tests. 
 
 
 		\subsection{Test runtime}
@@ -712,6 +712,8 @@ End Sub
 
 			\paragraph{Differences between the two test types}			
 			More importantly, it is possible to tell that the gui tests are 150 to 1300 times faster than the unit tests. Also with the unit tests it is possible to run several tests in a single run very fast compared to the GUI tests. In order to test a lot of different inputs with GUI it would take some time but this can be achieved swiftly with the unit tests.
+
+			WHEN WILL THE TESTS RUN? DIFF OCCASIONS!
 
 		\subsection{Code complexity}
 		
@@ -778,7 +780,15 @@ End Sub
 	\section{Conclusion}
 		A separate test environment for gui testing
 
+		With regards to a lot of the metrics that we have selected, the methods are uncomparable. Comparing automated GUI tests and unit tests does not make sense when it comes to code complexity, the amount of changes required and the amount or sort of defects that they capture. 
+
+		There are costs involved in introducing any of the methods but those are placed in different areas. For GUI testing, the costs are mainly in setting up usable test data, the effort of creating the tests and the time it takes to run the tests.
+
+		For the unit tests, the cost are mainly in training. 
+
 		Testing is the process of gathering information about a system with the intent to use it for some purpose, we can conclude that the different test methods gather different kinds of information at different costs.
+
+
 
 \begin{thebibliography}{1}
 \bibitem{perfect} Gerald M. Weinberg, {\em Perfect Software: and other illusions about testing}, Dorset House, 2008

@@ -1,5 +1,7 @@
 TODO:
 
+- who wins which section?
+
 - 2.3 Prerequisites for effective testing 	- WRITE!
 - 3. GUI testing 							- review and polish
 - 4.3 Drawbacks of unit testing 			- WRITE !
@@ -13,7 +15,6 @@ Results
 - 8.1 Time									- review and polish
 - 8.2.1 GUI changes							- review and polish
 - 8.2.2 Code Changes 						- WRITE!
-- 8.2.3 Test Data							- review and polish
 - 8.3 Test runtime 							- review and polish
 - 8.7.2 Scope 								- WRITE!
 - 8.7.3 GUI tests							- review and polish
@@ -26,3 +27,29 @@ DONE:
 - 8.6 Training 								- WRITE!
 - 8.7.1 Test environments					- review and polish
 - 8.5 Defects 								- review and polish
+- 8.2.3 Test Data							- review and polish
+
+----------------------------------------------------------------------
+Who wins?
+
+TIME
+Case 1 GUI = 4 unit
+Case 2 GUI = unit
+
+CHANGES
+uncomparable
+
+TEST DATA
+GUI requires more effort
+
+RUNTIME
+unit > GUI
+
+CODE COMPLEXITY
+uncomparable
+
+DEFECTS
+uncomparable
+
+TRAINING
+GUI > unit

@@ -632,6 +632,8 @@ End Sub
 
 			In the case of the Service Object List, it is interesting to see that the GUI tests which took longer to create also take longer to update. It seems that the complexity required to add the tests is maintained when the tests need to be updated.
 
+			Updating the GUI tests takes a similar amount of time in both cases but it is not possible to tell if this is a coincidence or if it has any meaning. 
+
 			\subsubsection{Conclusion}
 
 			It was known from the beginning that the time measurements would not provide any statistical evidence to conclude upon. It is possible to tell however that GUI tests might take longer to implement and update but not necessarily in all cases. 
@@ -642,18 +644,26 @@ End Sub
 
 			\subsubsection{GUI changes}
 
+			In the table below, the number of GUI controls accessed by the GUI tests are detailed as well as the difference after the change was introduced to the system. 
+
 			\begin{table}[h!]
 				\begin{tabular}{l l l l}
 				        & Base scenario & Updated scenario & Delta\\
-				 Case 1 & 5      & 7     & +2 \\
-				 Case 2 & 12     & 14    & +2 \\
+				 Service Object Case  & 5      & 7     & +2 \\
+				 Odometer Case & 12     & 14    & +2 \\
 				 \end{tabular}
 				 \caption{Amount of GUI controls used in the tests}
 			 \end{table}
 
-			 This is interesting because of maintainability - changing gui often means breaking tests - Reference to GUI testing - drawbacks?
+			GUI tests are often called fragile because changes in the GUI will break the tests. In both the Service Object Case and the Odometer Case, two components have to be added to make the new test run. 
 
-			 It is possible to conclude that the changes that have been implemented here are relatively small and comparable in size. In both cases, two new controls are accessed after the change has been introduced. We know from the previous analysis of the work items for the two modules that these types of changes are typical for the Workshop and Fuel modules.
+			In the Service Object Case, the test would break when the new scenario was implemented. In the Odometer Case, the test didn't break but it was necessary to add a new scenario to capture the new logic. 
+
+			A lot of the components are only used in the steps leading up the form where the business logic is tested. 
+
+			A change of this size does not seem to affect a lot of GUI component.  
+
+			It is possible to conclude that the changes that have been implemented here are relatively small and comparable in size. We know from the previous analysis of the work items for the two modules that these types of changes are typical for the Workshop and Fuel modules. It seems that this could be a typical amount of change needed to update GUI tests in these modules.
 
 			 \subsubsection{Code changes}
 
@@ -783,7 +793,12 @@ End Sub
 			However they require a refactoring effort before being put in place and this effort requires advanced training. 
 
 		\subsection{Risks}
-		I know what happens and might optimize my code for that scenario. For example, the test cases for case 1. 
+		Some aspects which might influence the results. 
+
+		\subsubsection{Construction of the test cases}
+		Since one of the first steps is selecting case studies based on which change is implemented in the system, the nature of the change is known. This is likely to influence how the test cases are designed and thus the amount of change required to update the tests so that they fit the new scenario. 
+
+		This risk is impossible to mitigate given the procedure used. The change which is about to be applied is known at the time of the test implementation and it is impossible to completely disregard that information.
 
 	\section{Further work}
 	- analysis of what kind of bugs to the methods catch

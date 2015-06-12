@@ -5,7 +5,7 @@ TODO:
 - 4.3 Drawbacks of unit testing 			- WRITE !
 - 4.4 Success factors of unit testing 		- WRITE!
 - 5 Legacy code and refactoring 			- review and polish
-- 6.3.1 Time 								- review and polish						- 6.3.3 Test runtime 						- review and polish
+- 6.3.3 Test runtime 						- review and polish
 - 6.3.5 Defects								- review and polish
 - 6.4.2 NUnit								- WRITE!
 
@@ -36,6 +36,7 @@ DONE:
 - 8.1 Time									- review and polish
 - 8.2.1 GUI changes							- review and polish
 - 8.8 Risks 								- WRITE!
+- 6.3.1 Time 								- review and polish						
 
 ----------------------------------------------------------------------
 Who wins?

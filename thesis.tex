@@ -254,14 +254,26 @@
 		The interview reveals that more GUI changes are to be expected in the future as the GUI is being polished and the system owner stresses the need for increased usability. 
 
 		\subsection{Comparison criteria}
-			\subsubsection{Time}
-			One important aspect of this thesis is to compare the two methods with regards to how difficult it is to maintain the tests. An obvious way of doing this is to measure the time it takes to update the tests after the system has changed. 
+			The goal of the thesis is to discuss the advantages and drawbacks of the two proposed methods of adding automated tests to the OMS system. The selection of the comparison criteria is made based on the background study performed on automated testing. 
 
-			Time measurement can be tricky to perform and during the short time span available for the thesis, it is not possible to get enough data in order to do a statistical analysis on it. 
+			\subsubsection{Development time}
+			Time is an obvious factor to take into consideration when comparing the two methods. Time is a key constraint in software development and it is necessary to know how costly the two methods are for the development team. 
 
-			However, it is still interesting to use the recorded times when discussing the results. The time that is recorded is the time spent working on the problem at hand. Time used for example for discussions and solving problems with the test or development environment will not be recorded as efficient time spent on the test or refactoring effort.
+			During the short time span available for the thesis, it is not possible to get enough data in to do a statistical analysis on but it can give hints towards possible costs.
+
+			\paragraph{Time which is recorded}			
 			
-			Even though a lot of focus is placed on the maintenance effort for the tests, the time it takes to set up the tests will also be recorded. If one method is very costly it, this needs to be taken into account when comparing the two. As a matter of fact, if both methods are costly, it will still be interesting to know this.
+			Time is recorded in two parts: the development time for creating the tests and the time needed to update them after the change has been introduced. 
+
+			Development time gives an indication of the initial effort needed to introduce testing. 
+
+			The time required for updating on the other hand is related to the maintainance effort of keeping the automated tests functional when the system changes. 
+
+			The time that is recorded is the time spent working on the problem at hand. 
+		
+			\paragraph{Time which is not recorded}
+			
+			Time used for example for discussions and solving problems with the test or development environment will not be recorded as efficient time spent on the test or refactoring effort.
 
 			Because the procedure used is refactoring code, adding unit tests and then switching to a newer version of the code through the version control system, the refactored code will not in place after the new version has been switched to. The time it takes to reproduce the refactoring in the new version is not accounted for. This is because the interesting scenario is to see how much effort it takes to update the refactored code and its tests. 
 
@@ -276,7 +288,7 @@
 			One of the conclusions in \cite{unit} was that it should be easy to run the unit test suite and that the run time for the test suite needs to be short. 
 
 			\subsubsection{Code complexity}
-			As shown, an advantage of reducing complexity of the code is that a code base with less complaxity is less prone to errors and therefor it is interesting to observe if the code complexiy goes up or down with both methods.   
+			As shown, an advantage of reducing complexity of the code is that a code base with less complexity is less prone to errors and therefor it is interesting to observe if the code complexiy goes up or down with both methods.   
 
 			\subsubsection{Defects}
 			A typical criteria for judging the effectiveness of a test technique is the number and severity of the defects it catches (such as it is done in \cite{unit}). 
@@ -731,7 +743,7 @@ End Sub
 			A difference in runtime for the unit tests in the different cases is noticed with around 46 ms in the first case and around 18 ms in the second case. An explanation for this is the different type of inputs for the different tests. In the first case, we manipulate collections of data (lists of service objects) whereas the tests for the second case handles short strings (mileages).
 
 			IS THERE A CONNECTION HERE TO UNIT TEST PRACTICES?
-			
+
 			\paragraph{Differences between the two test types}			
 			There is a magnitude of difference in the run time for the different test types. The GUI tests need to launch the application and navigate through it before the assertion can be made whereas the unit tests simply test a unit of functionality.
 

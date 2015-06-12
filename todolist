@@ -12,6 +12,11 @@ TODO:
 - something about how slow it was to use the service object list?
 - extending the tests further? reuse gui but not unit? different mileages in odometer
 - there are fewer components in case 1 but it takes longer to run and implement
+- usability and number of components?
+- test run time - varians?
+
+Implementation
+- test cases for each thingy
 
 Results
 - 8.2.2 Code Changes 						- WRITE!
